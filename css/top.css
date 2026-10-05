@@ -1,0 +1,1672 @@
+@charset "utf-8";
+/*============================================================
+	top.css … トップページ専用（base.css の後に読み込む）
+============================================================*/
+
+/*------------------------------------------------------------
+	MV
+	PC：画像 1366×768（ヘッダーと「重要なお知らせ」の下まで入り込む）。
+	    1366px を超えたら 1680px まで比率を保って高くなり、それ以上は高さ固定で横に広がる
+	写真（.mvSlide）は画面に固定した背景。.mv 自体は透明の「窓」で、
+	英字ループと背景グラデ（.gradArea）が写真の上をスクロールしていく
+------------------------------------------------------------*/
+#main .mv {
+	position: relative;
+	height: max(76.8rem, min(56.22vw, 94.5rem));
+}
+#main .mvSlide {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100vh;
+	height: 100lvh; /* スマホでアドレスバーが出入りしても写真の大きさが変わらないように */
+	background: #000;
+}
+#main .mvSlide img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0;
+	transition: opacity 1.2s ease;
+}
+#main .mvSlide img.is-active {
+	opacity: 1;
+}
+/* 重要なお知らせ */
+#main .newsBar {
+	position: absolute;
+	top: var(--header-h);
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 6rem;
+	padding: 0 12rem 0 6.4rem;
+	display: flex;
+	align-items: center;
+	color: #000;
+	background: #fff;
+}
+#main .newsBar::after {
+	content: "";
+	position: absolute;
+	top: 2.2rem;
+	right: 6.8rem;
+	width: 0.9rem;
+	height: 1.53rem;
+	background: url(../img/common/arrow_right.svg) no-repeat center / contain;
+	transform: scaleX(-1);
+}
+#main .newsBar .label {
+	width: 11.4rem;
+	height: 2.4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	color: #fff;
+	font-size: 1.2rem;
+	font-weight: 700;
+	background: var(--color-red);
+	border-radius: 5rem;
+}
+#main .newsBar .txt {
+	margin-left: 2.4rem;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+	font-size: 1.4rem;
+	line-height: 2.2rem;
+}
+/* キャッチコピー */
+#main .mvCatch {
+	position: absolute;
+	top: 18.25rem;
+	left: 6.6rem;
+	z-index: 1;
+	color: #fff;
+	font-size: 5.2rem;
+	font-weight: 700;
+	line-height: 1.42;
+	letter-spacing: 0.03em;
+}
+#main .mvCatch .line {
+	display: block;
+}
+@media all and (min-width: 897px) {
+	#main .newsBar:hover .txt {
+		color: var(--color-blue);
+	}
+}
+@media all and (max-width: 896px) {
+	#main .mv {
+		height: calc(var(--header-h) + 8.4rem + 48rem);
+	}
+	#main .newsBar {
+		position: absolute;
+		height: 8.4rem;
+		padding: 1.2rem 4rem 1.2rem 2rem;
+		display: block;
+		border-bottom: 1px solid var(--color-line);
+	}
+	#main .newsBar::after {
+		top: 3.4rem;
+		right: 1.8rem;
+		width: 0.8rem;
+		height: 1.36rem;
+	}
+	#main .newsBar .label {
+		width: 9.6rem;
+		height: 2rem;
+		font-size: 1rem;
+	}
+	#main .newsBar .txt {
+		margin: 0.6rem 0 0;
+		font-size: 1.2rem;
+		line-height: 1.8rem;
+	}
+	#main .newsBar .txt br {
+		display: none;
+	}
+	/* SP は写真の明るい部分にキャッチが重なるため、上部に薄い影を敷く（Figma に SP デザインなし・仮） */
+	#main .mv::before {
+		content: "";
+		position: absolute;
+		top: calc(var(--header-h) + 8.4rem);
+		left: 0;
+		width: 100%;
+		height: 24rem;
+		background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+	}
+	#main .mvCatch {
+		top: calc(var(--header-h) + 8.4rem + 2.8rem);
+		left: 2rem;
+		font-size: 2.6rem;
+		text-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.3);
+	}
+}
+
+/*------------------------------------------------------------
+	英字テキストの無限ループ（右→左）
+------------------------------------------------------------*/
+#main .loopTxt {
+	height: 12.4rem;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+#main .loopTrack {
+	width: max-content;
+	display: flex;
+	animation: loopTxt 40s linear infinite; /* 実際の秒数は js/main.js が文の数に合わせて設定 */
+}
+#main .loopTrack p {
+	padding-right: 5.4rem;
+	color: #fff;
+	font-family: var(--font-en);
+	font-size: 5.4rem;
+	font-weight: 700;
+	line-height: 1.03;
+	white-space: nowrap;
+}
+@keyframes loopTxt {
+	from { transform: translateX(0); }
+	to   { transform: translateX(-50%); }
+}
+@media all and (max-width: 896px) {
+	#main .loopTxt {
+		height: 6.4rem;
+	}
+	#main .loopTrack {
+		animation-duration: 25s;
+	}
+	#main .loopTrack p {
+		padding-right: 2.8rem;
+		font-size: 2.8rem;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	#main .loopTrack {
+		animation: none;
+	}
+}
+
+/*------------------------------------------------------------
+	背景エリア（固定した MV 写真の上に重なってスクロールしてくる）
+	- .gradArea 自体は背景ぼかし 10px（Figma「背景グラデ」）
+	- 画面に貼り付く .gradBgInner に色を塗る（js/main.js）
+	  上部：白 80%→89%（写真がぼけて透ける）→ お問い合わせフローで徐々に白ベタ（スクロール連動）
+	  → コンテンツ一覧で #C1E6F3、お知らせで #C0ECDF（.gradColor を 1 秒でフェード）
+------------------------------------------------------------*/
+#main .gradArea {
+	position: relative;
+	-webkit-backdrop-filter: blur(1rem);
+	backdrop-filter: blur(1rem);
+}
+#main .gradBg {
+	position: absolute;
+	inset: 0;
+}
+#main .gradBgInner {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	height: 100lvh;
+	/* 白の濃さ（画面上端・下端）は js/main.js が --bg-top / --bg-bottom に入れる */
+	background: linear-gradient(180deg, rgba(255, 255, 255, var(--bg-top, 0.8)), rgba(255, 255, 255, var(--bg-bottom, 0.8)));
+}
+#main .gradColor {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	transition: opacity 1s ease;
+}
+#main .gradColor.is-on {
+	opacity: 1;
+}
+#main .gradArea > *:not(.gradBg) {
+	position: relative;
+	z-index: 1;
+}
+#main .gradArea {
+	padding-top: 12rem;
+}
+
+/*------------------------------------------------------------
+	LP導線（シャッターメンテナンス）
+------------------------------------------------------------*/
+#main .lpBanner {
+	position: relative;
+	height: 20rem;
+	display: block;
+	overflow: hidden;
+	color: #fff;
+	background: url(../img/top/lp_maintenance.webp) no-repeat center / cover;
+	border-radius: 1rem;
+}
+#main .lpBanner::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 55.95rem;
+	height: 100%;
+	background: url(../img/top/lp_panel.svg) no-repeat left top / 100% 100%;
+}
+#main .lpBanner > span {
+	position: absolute;
+	left: 4.2rem;
+}
+#main .lpBanner .tags {
+	top: 3rem;
+	display: flex;
+	gap: 2.36rem;
+}
+#main .lpBanner .tag {
+	width: 9.67rem;
+	height: 3.7rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--color-blue);
+	font-size: 2.8rem;
+	font-weight: 700;
+	line-height: 1;
+	background: #fff;
+	border-radius: 0.4rem;
+}
+#main .lpBanner .made {
+	position: absolute;
+	top: 0.49rem;
+	left: 36.08rem;
+	font-size: 3rem;
+	font-weight: 700;
+	line-height: 2.4rem;
+	white-space: nowrap;
+}
+#main .lpBanner .ttl {
+	top: 6.01rem;
+	font-size: 4rem;
+	font-weight: 900;
+	line-height: 7.75rem;
+	white-space: nowrap;
+}
+#main .lpBanner .sub {
+	top: 13.85rem;
+	font-size: 3.2rem;
+	font-weight: 700;
+	line-height: 2.4rem;
+	white-space: nowrap;
+}
+#main .lpBanner .btn01 {
+	position: absolute;
+	top: 11.6rem;
+	left: 82.9rem;
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	/* 中身の幅が 102rem になるので、ボタンを右端基準に */
+	#main .lpBanner .btn01 {
+		left: auto;
+		right: 2.5rem;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .gradArea {
+		padding-top: 6rem;
+	}
+	#main .lpBanner {
+		height: auto;
+		padding: 2.4rem 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	#main .lpBanner::before {
+		width: 100%;
+		background: rgba(0, 156, 229, 0.89);
+	}
+	#main .lpBanner .tags,
+	#main .lpBanner .ttl,
+	#main .lpBanner .sub,
+	#main .lpBanner .btn01 {
+		position: relative;
+		top: auto;
+		left: auto;
+	}
+	#main .lpBanner .tags {
+		gap: 0.8rem;
+		align-items: center;
+	}
+	#main .lpBanner .tag {
+		width: 5.6rem;
+		height: 2.8rem;
+		font-size: 1.7rem;
+	}
+	#main .lpBanner .made {
+		position: static;
+		margin-left: 0.4rem;
+		font-size: 1.8rem;
+	}
+	#main .lpBanner .ttl {
+		margin-top: 1rem;
+		font-size: 2.6rem;
+		line-height: 1.4;
+	}
+	#main .lpBanner .sub {
+		margin-top: 0.4rem;
+		font-size: 1.8rem;
+		line-height: 1.5;
+	}
+	#main .lpBanner .btn01 {
+		margin-top: 1.6rem;
+	}
+}
+
+/*------------------------------------------------------------
+	全国対応ネットワーク
+	PC は Figma の座標どおり .netStage（112rem × 69.5rem）の中に絶対配置
+------------------------------------------------------------*/
+#main .network {
+	margin-top: 12rem;
+}
+#main .netBody {
+	position: relative;
+	margin-top: 4rem;
+}
+/* 左端から伸びる青グラデの帯（Figma「Rectangle 4260」。.js-band で左から伸びる） */
+#main .netBand {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: max(12.3rem, calc((100% - 136.6rem) / 2 + 12.3rem));
+	background: linear-gradient(151.2deg, #def4ff 21.7%, #009ce5 102.3%);
+	border-radius: 0 1rem 1rem 0;
+}
+#main .netStage {
+	position: relative;
+	height: 69.5rem;
+}
+#main .netTxt {
+	position: absolute;
+	top: 5.79rem;
+	left: 0;
+	z-index: 2;
+	width: 33.8rem;
+}
+#main .netTtl {
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 2.6rem;
+}
+#main .netDesc {
+	width: 32.1rem;
+	margin-top: 1.8rem;
+	font-size: 1.6rem;
+	line-height: 2.6rem;
+}
+#main .netTxt .btn01 {
+	margin-top: 2.4rem;
+}
+#main .netBtn {
+	--btn-w: 30.3rem;
+}
+#main .netMap {
+	position: absolute;
+	top: 3rem;
+	left: -6.1rem;
+	width: 73rem;
+	height: 67.5rem;
+}
+#main .netMap img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+#main .netMap .hl {
+	opacity: 0;
+	transition: opacity 0.3s ease-out;
+}
+#main .netMap .hl.is-active {
+	opacity: 1;
+}
+#main .netLead {
+	position: absolute;
+	top: 5.21rem;
+	left: 70.5rem;
+	font-size: 2.4rem;
+	font-weight: 700;
+	line-height: 3.4rem;
+}
+/* エリアカード（hover：紺地＋拠点数を表示、地図の該当地域が青くなる） */
+#main .netArea li {
+	position: absolute;
+	width: 17.5rem;
+	height: 10.8rem;
+}
+@media all and (min-width: 897px) {
+	#main .netArea .hokkaido   { top: 14.77rem; left: 69.27rem; }
+	#main .netArea .tohoku     { top: 14.7rem;  left: 88.37rem; }
+	#main .netArea .kanetsu    { top: 27.17rem; left: 63.3rem; }
+	#main .netArea .shutoken   { top: 27.17rem; left: 82.4rem; }
+	#main .netArea .chubu      { top: 39.57rem; left: 57.3rem; }
+	#main .netArea .kansai     { top: 39.57rem; left: 76.4rem; }
+	#main .netArea .chushikoku { top: 51.97rem; left: 51.3rem; }
+	#main .netArea .kyushu     { top: 51.97rem; left: 70.4rem; }
+}
+#main .netArea a {
+	position: relative;
+	height: 100%;
+	display: block;
+	background: #fff;
+	border-radius: 0.6rem;
+	transition: background-color 0.3s ease-out;
+}
+#main .netArea .name {
+	position: absolute;
+	top: 1.79rem;
+	left: 2.4rem;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+	white-space: nowrap;
+	transition: color 0.3s ease-out;
+}
+#main .netArea .count {
+	position: absolute;
+	top: 5.03rem;
+	left: 2.4rem;
+	display: flex;
+	align-items: baseline;
+	gap: 0.4rem;
+	color: #fff;
+	font-size: 1.6rem;
+	font-weight: 500;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+	white-space: nowrap;
+	opacity: 0;
+	transition: opacity 0.3s ease-out;
+}
+#main .netArea .num {
+	font-family: var(--font-en);
+	font-size: 4.2rem;
+	font-weight: 700;
+	line-height: 4.326rem;
+	letter-spacing: 0;
+}
+#main .netArea .arrow {
+	position: absolute;
+	top: 5.4rem;
+	left: 6.9rem;
+	width: 3.6rem;
+	height: 3.6rem;
+	background: url(../img/common/btn_arrow.svg) no-repeat center / contain;
+	transition: left 0.3s ease-out;
+}
+@media all and (min-width: 897px) {
+	#main .netArea a:hover {
+		background: var(--color-navy);
+	}
+	#main .netArea a:hover .name {
+		color: #fff;
+	}
+	#main .netArea a:hover .count {
+		opacity: 1;
+	}
+	#main .netArea a:hover .arrow {
+		left: 12.1rem;
+		background-image: url(../img/common/btn_arrow_hover.svg);
+	}
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	#main .netBand {
+		right: 4rem;
+	}
+	/* 中身の幅が 102rem になるので、Figma の配置ごと縮める */
+	#main .netStage {
+		width: 112rem;
+		zoom: 0.91;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .network {
+		margin-top: 6rem;
+	}
+	#main .netBody {
+		margin-top: 2.4rem;
+	}
+	#main .netBand {
+		right: 0;
+		border-radius: 0;
+	}
+	#main .netStage {
+		height: auto;
+		padding: 3.6rem 0 4rem;
+	}
+	#main .netTxt,
+	#main .netMap,
+	#main .netLead,
+	#main .netArea li {
+		position: relative;
+		top: auto;
+		left: auto;
+	}
+	#main .netTxt {
+		width: auto;
+	}
+	#main .netTtl {
+		font-size: 1.8rem;
+	}
+	#main .netDesc {
+		width: auto;
+		margin-top: 1.2rem;
+		font-size: 1.4rem;
+		line-height: 1.8;
+	}
+	/* 地図の右側の余白を切り落として幅いっぱいに表示 */
+	#main .netMap {
+		width: 100%;
+		height: auto;
+		margin-top: 2.4rem;
+		overflow: hidden;
+		aspect-ratio: 585 / 675;
+	}
+	#main .netMap img {
+		left: -14.5%;
+		width: 124.8%;
+	}
+	#main .netLead {
+		margin-top: 2.4rem;
+		font-size: 2rem;
+		line-height: 1.5;
+	}
+	#main .netArea {
+		margin-top: 1.6rem;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+	#main .netArea li {
+		width: auto;
+		height: 7.2rem;
+	}
+	#main .netArea .name {
+		top: 1.4rem;
+		left: 1.4rem;
+		font-size: 1.5rem;
+	}
+	#main .netArea .count {
+		display: none;
+	}
+	#main .netArea .arrow {
+		top: auto;
+		bottom: 1rem;
+		left: auto;
+		right: 1rem;
+		width: 2.8rem;
+		height: 2.8rem;
+	}
+}
+
+/*------------------------------------------------------------
+	製品ラインナップ（タブ切替：0.25秒でフェード。Figma の Smart Animate 0.25s ease-out）
+------------------------------------------------------------*/
+#main .product {
+	margin-top: 12rem;
+}
+#main .prodHead {
+	height: 6.3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+#main .prodIntro {
+	margin-top: 1.675rem;
+	font-size: 1.6rem;
+	line-height: 2.6rem;
+	white-space: nowrap;
+}
+#main .prodTabs {
+	margin-top: 4rem;
+}
+#main .tabList {
+	display: flex;
+	gap: 0.5rem;
+}
+#main .tabList button {
+	position: relative;
+	width: 27.6rem;
+	height: 9.4rem;
+	color: var(--color-blue);
+	text-align: center;
+	background: #e6f1f6;
+	border-radius: 1rem 1rem 0 0;
+	transition: color 0.25s ease-out, background-color 0.25s ease-out;
+}
+#main .tabList button.is-active {
+	color: #fff;
+	background: var(--color-blue);
+	cursor: default;
+}
+#main .tabList .num,
+#main .tabList .ja {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	display: block;
+	font-size: 2.4rem;
+	line-height: 2.6rem;
+}
+#main .tabList .num {
+	top: 1.52rem;
+	font-family: var(--font-en);
+	font-weight: 400;
+}
+#main .tabList .ja {
+	top: 5.01rem;
+	font-weight: 700;
+}
+#main .tabPanels {
+	position: relative;
+	height: 49.9rem;
+	background: linear-gradient(-70.26deg, #ddf4ff 10.42%, #009ce5 94.454%);
+	border-radius: 0 0 1rem 1rem;
+}
+#main .tabPanel {
+	position: absolute;
+	inset: 0;
+	color: #fff;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.25s ease-out, visibility 0.25s;
+}
+#main .tabPanel.is-active {
+	opacity: 1;
+	visibility: visible;
+}
+#main .panelTxt > * {
+	position: absolute;
+	left: 4.8rem;
+}
+#main .panelTxt .num {
+	top: 8.98rem;
+	font-family: var(--font-en);
+	font-size: 5.2rem;
+	line-height: 2.6rem;
+}
+/* 番号と製品名の間の縦線 */
+#main .panelTxt .num::after {
+	content: "";
+	position: absolute;
+	top: -2.08rem;
+	left: 9.4rem;
+	width: 1px;
+	height: 6.6rem;
+	background: #fff;
+}
+#main .panelTxt .name {
+	top: 6.87rem;
+	left: 17.2rem;
+	font-weight: 700;
+}
+#main .panelTxt .name .en {
+	display: block;
+	font-family: var(--font-en);
+	font-size: 1.6rem;
+	font-weight: 400;
+	line-height: 1.219;
+	text-transform: uppercase;
+}
+#main .panelTxt .name .ja {
+	margin-top: 1.28rem;
+	display: block;
+	font-size: 3.2rem;
+	line-height: 2.6rem;
+}
+#main .panelTxt .catch {
+	top: 17.79rem;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 2.6rem;
+	white-space: nowrap;
+}
+#main .panelTxt .desc {
+	top: 21.58rem;
+	width: 41rem;
+	font-size: 1.6rem;
+	line-height: 2.6rem;
+}
+#main .is-2line .panelTxt .catch {
+	top: 17.59rem;
+	line-height: 3rem;
+}
+#main .is-2line .panelTxt .desc {
+	top: 24.88rem;
+}
+#main .panelTxt .btn01 {
+	top: 36.9rem;
+	left: 12rem;
+}
+#main .panelImg {
+	position: absolute;
+	top: 3.4rem;
+	left: 51.1rem;
+	width: 57.5rem;
+	height: 43.08rem;
+	overflow: hidden;
+	border-radius: 0.6rem;
+}
+#main .panelImg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+@media all and (min-width: 897px) {
+	#main .tabList button:not(.is-active):hover {
+		background: #d3e8f2;
+	}
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	#main .prodHead {
+		height: auto;
+		flex-direction: column;
+		gap: 2.4rem;
+	}
+	#main .prodIntro {
+		margin-top: 0;
+		white-space: normal;
+	}
+	#main .prodTabs {
+		width: 112rem;
+		zoom: 0.91;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .product {
+		margin-top: 6rem;
+	}
+	#main .prodHead {
+		height: auto;
+		flex-direction: column;
+		gap: 1.6rem;
+	}
+	#main .prodIntro {
+		margin-top: 0;
+		font-size: 1.4rem;
+		line-height: 1.8;
+		white-space: normal;
+	}
+	#main .prodIntro br {
+		display: none;
+	}
+	#main .prodTabs {
+		margin-top: 2.4rem;
+	}
+	#main .tabList {
+		gap: 0.3rem;
+	}
+	#main .tabList button {
+		flex: 1;
+		width: auto;
+		height: 6.4rem;
+		border-radius: 0.6rem 0.6rem 0 0;
+	}
+	#main .tabList .num {
+		top: 1rem;
+		font-size: 1.4rem;
+		line-height: 1.6rem;
+	}
+	#main .tabList .ja {
+		top: 3rem;
+		padding: 0 0.2rem;
+		font-size: 1.1rem;
+		line-height: 1.4rem;
+	}
+	/* SP はパネルを同じマスに重ね、いちばん高いパネルに高さを合わせる */
+	#main .tabPanels {
+		height: auto;
+		display: grid;
+		/* 縦長になるため、白文字が読めるよう明るい側を弱めた（Figma に SP デザインなし・仮） */
+		background: linear-gradient(170deg, #009ce5 45%, #5fc3f0 100%);
+		border-radius: 0 0 0.6rem 0.6rem;
+	}
+	#main .tabPanel {
+		position: relative;
+		inset: auto;
+		grid-area: 1 / 1;
+		padding: 2rem 2rem 3.2rem;
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 2rem;
+	}
+	#main .panelImg {
+		position: relative;
+		top: auto;
+		left: auto;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 575 / 431;
+	}
+	#main .panelTxt {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	#main .panelTxt > *,
+	#main .panelTxt .name,
+	#main .panelTxt .catch,
+	#main .panelTxt .desc,
+	#main .is-2line .panelTxt .catch,
+	#main .is-2line .panelTxt .desc,
+	#main .panelTxt .btn01 {
+		position: relative;
+		top: auto;
+		left: auto;
+	}
+	#main .panelTxt .num {
+		position: absolute;
+		top: 0.4rem;
+		font-size: 3.6rem;
+		line-height: 1;
+	}
+	#main .panelTxt .num::after {
+		top: -0.2rem;
+		left: 6rem;
+		height: 4.4rem;
+	}
+	#main .panelTxt .name {
+		margin-left: 7.6rem;
+	}
+	#main .panelTxt .name .en {
+		font-size: 1.2rem;
+	}
+	#main .panelTxt .name .ja {
+		margin-top: 0.4rem;
+		font-size: 2.2rem;
+		line-height: 1.3;
+	}
+	#main .panelTxt .catch,
+	#main .is-2line .panelTxt .catch {
+		margin-top: 2rem;
+		font-size: 1.6rem;
+		line-height: 1.5;
+		white-space: normal;
+	}
+	#main .panelTxt .desc,
+	#main .is-2line .panelTxt .desc {
+		width: auto;
+		margin-top: 0.8rem;
+		font-size: 1.4rem;
+		line-height: 1.8;
+	}
+	#main .panelTxt .btn01 {
+		margin-top: 2rem;
+	}
+}
+
+/*------------------------------------------------------------
+	お問い合わせフロー（4ステップ。カードの間に矢印）
+------------------------------------------------------------*/
+#main .flow {
+	margin-top: 12rem;
+}
+#main .flowList {
+	margin-top: 5rem;
+	display: flex;
+	gap: 4rem;
+}
+#main .flowList li {
+	position: relative;
+	width: 25rem;
+	height: 25.6rem;
+	background: #e1eff6;
+	border-radius: 0.6rem;
+}
+/* カードの右の矢印（最後のカード以外） */
+#main .flowList li:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	top: 11.4rem;
+	left: 26.1rem;
+	width: 1.7rem;
+	height: 2.9rem;
+	background: url(../img/top/flow_arrow.svg) no-repeat center / contain;
+}
+#main .flowList .icon {
+	position: absolute;
+	top: 3.3rem;
+	left: 1.8rem;
+	width: 4rem;
+}
+#main .flowList .step {
+	padding-top: 4.06rem;
+	color: var(--color-navy);
+	font-family: var(--font-en);
+	font-size: 2rem;
+	line-height: 1.219;
+	letter-spacing: 0.05em;
+	text-align: center;
+}
+#main .flowList .ttl {
+	position: absolute;
+	top: 7.98rem;
+	left: 0;
+	width: 100%;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 3rem;
+	text-align: center;
+}
+#main .flowList .desc {
+	position: absolute;
+	top: 12.48rem;
+	left: 3rem;
+	right: 3rem;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	letter-spacing: -0.01em;
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	#main .flowList {
+		width: 112rem;
+		zoom: 0.91;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .flow {
+		margin-top: 6rem;
+	}
+	#main .flowList {
+		margin-top: 2.4rem;
+		flex-direction: column;
+		gap: 3.6rem;
+	}
+	#main .flowList li {
+		width: auto;
+		height: auto;
+		padding: 2rem 2rem 2.4rem;
+	}
+	/* SP は縦並びなので矢印を下向きに */
+	#main .flowList li:not(:last-child)::after {
+		top: auto;
+		bottom: -3rem;
+		left: 50%;
+		width: 1.4rem;
+		height: 2.4rem;
+		margin-left: -0.7rem;
+		transform: rotate(90deg);
+	}
+	#main .flowList .icon {
+		top: 1.6rem;
+		left: 2rem;
+		width: 3.6rem;
+	}
+	#main .flowList .step {
+		padding: 0.5rem 0 0 5.2rem;
+		font-size: 1.8rem;
+		text-align: left;
+	}
+	#main .flowList .ttl,
+	#main .flowList .desc {
+		position: static;
+	}
+	#main .flowList .ttl {
+		margin: 1.2rem 0 0;
+		font-size: 1.6rem;
+		line-height: 1.5;
+		text-align: left;
+	}
+	#main .flowList .desc {
+		margin-top: 0.6rem;
+		font-size: 1.4rem;
+		line-height: 1.7;
+	}
+}
+
+/*------------------------------------------------------------
+	コンテンツ一覧（中央拡大のカルーセル）
+	カードは3つの位置（左・中央・右）に置き、矢印で 0.4 秒かけて移動（Figma の Smart Animate 0.4s ease-in-out）。
+	位置は js/main.js が is-left / is-center / is-right / is-outL / is-outR を付けて切り替える。
+	hover：写真が少し拡大＋丸矢印が紺（0.3s ease-out）
+------------------------------------------------------------*/
+#main .contents {
+	margin-top: 12rem;
+}
+#main .ctSlider {
+	position: relative;
+	height: 35.9rem;
+	margin-top: 2.2rem;
+	/* 各位置の座標（PC：Figma のとおり） */
+	--l-x: 4.8rem;   --l-y: 2.8rem;  --l-s: 1;
+	--c-x: 34.5rem;  --c-y: 0rem;    --c-s: 1.1813;
+	--r-x: 70.8rem;  --r-y: 2.8rem;  --r-s: 1;
+}
+#main .ctCard {
+	position: absolute;
+	top: var(--r-y);
+	left: var(--r-x);
+	width: 36.4rem;
+	height: 30.4rem;
+	opacity: 0;
+	pointer-events: none;
+	transform: scale(var(--r-s));
+	transform-origin: 0 0;
+}
+/* 最初の配置ではアニメーションさせない（js/main.js が配置後に .is-ready を付ける） */
+#main .ctSlider.is-ready .ctCard {
+	transition: left 0.4s ease-in-out, top 0.4s ease-in-out, transform 0.4s ease-in-out, opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+}
+#main .ctCard.is-left,
+#main .ctCard.is-outL {
+	top: var(--l-y);
+	left: var(--l-x);
+	transform: scale(var(--l-s));
+}
+#main .ctCard.is-center {
+	z-index: 2;
+	top: var(--c-y);
+	left: var(--c-x);
+	transform: scale(var(--c-s));
+	filter: drop-shadow(0 0 0.74rem rgba(0, 0, 0, 0.25));
+}
+#main .ctCard.is-left,
+#main .ctCard.is-center,
+#main .ctCard.is-right {
+	opacity: 1;
+	pointer-events: auto;
+}
+#main .ctCard.is-left,
+#main .ctCard.is-right {
+	z-index: 1;
+}
+#main .ctCard a {
+	height: 100%;
+	display: block;
+}
+#main .ctCard .img {
+	height: 21.4rem;
+	display: block;
+	overflow: hidden;
+	border-radius: 1rem 1rem 0 0;
+}
+#main .ctCard .img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease-out;
+}
+#main .ctCard .body {
+	position: relative;
+	height: 9rem;
+	display: block;
+	background: #fff;
+	border: 1px solid var(--color-line);
+	border-top: 0;
+	border-radius: 0 0 1rem 1rem;
+}
+#main .ctCard .body::after {
+	content: "";
+	position: absolute;
+	top: 2.7rem;
+	right: 2rem;
+	width: 3.6rem;
+	height: 3.6rem;
+	background: url(../img/common/btn_arrow.svg) no-repeat center / contain;
+}
+#main .ctCard .icon {
+	position: absolute;
+	top: 2.69rem;
+	left: 2.59rem;
+	width: 3.62rem;
+}
+#main .ctCard .name {
+	position: absolute;
+	top: 2.95rem;
+	left: 9rem;
+	font-size: 2rem;
+	font-weight: 700;
+	line-height: 1.448;
+	letter-spacing: 0.05em;
+	white-space: nowrap;
+}
+#main .ctArrow {
+	position: absolute;
+	top: 14rem;
+	z-index: 3;
+	width: 4.8rem;
+	height: 8rem;
+}
+#main .ctArrow::before {
+	content: "";
+	position: absolute;
+	top: 1.95rem;
+	left: 1.2rem;
+	width: 2.4rem;
+	height: 4.1rem;
+	background: url(../img/common/arrow_slide.svg) no-repeat center / contain;
+}
+#main .ctArrow.prev {
+	left: -1.2rem;
+}
+#main .ctArrow.next {
+	right: -1.2rem;
+}
+#main .ctArrow.next::before {
+	transform: scaleX(-1);
+}
+@media all and (min-width: 897px) {
+	#main .ctCard a:hover .img img {
+		transform: scale(1.152);
+	}
+	#main .ctCard a:hover .body::after {
+		background-image: url(../img/common/btn_arrow_navy.svg);
+	}
+	#main .ctArrow:hover::before {
+		opacity: 0.6;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .contents {
+		margin-top: 6rem;
+	}
+	/* SP：中央のカードを大きく、左右はほぼ画面外にのぞく程度 */
+	#main .ctSlider {
+		height: 25.84rem;
+		margin-top: 2.4rem;
+		--c-s: 0.85;  --c-x: calc(50% - 15.47rem);  --c-y: 0rem;
+		--l-s: 0.7;   --l-x: calc(50% - 12.74rem - 27rem); --l-y: 2.28rem;
+		--r-s: 0.7;   --r-x: calc(50% - 12.74rem + 27rem); --r-y: 2.28rem;
+	}
+	#main .ctArrow {
+		top: 8.9rem;
+	}
+	#main .ctArrow.prev {
+		left: -2rem;
+	}
+	#main .ctArrow.next {
+		right: -2rem;
+	}
+}
+
+/*------------------------------------------------------------
+	文化シヤッターグループ
+	カード（280×178、間隔40）を画面幅いっぱいに並べ、現在のカードを中央に置く。
+	矢印・ドットで 0.4 秒スライド。前後に複製を置いてループさせる（js/main.js）
+------------------------------------------------------------*/
+#main .group {
+	margin-top: 12rem;
+}
+#main .grpSlider {
+	margin-top: 5rem;
+}
+/* hover でカードが 11px 浮くので、その分だけ上に余白を足して切れないようにする */
+#main .grpView {
+	position: relative;
+	height: 18.9rem;
+	margin-top: -1.1rem;
+	overflow: hidden;
+}
+#main .grpTrack {
+	position: absolute;
+	top: 1.1rem;
+	left: calc(50% - 14rem - var(--pos, 0) * 32rem);
+	display: flex;
+	gap: 4rem;
+}
+#main .grpSlider.is-ready .grpTrack {
+	transition: left 0.4s ease-in-out;
+}
+#main .grpCard {
+	width: 28rem;
+	height: 17.8rem;
+	flex-shrink: 0;
+}
+#main .grpCard a {
+	position: relative;
+	height: 100%;
+	display: block;
+	background: #fff;
+	border-radius: 0.6rem;
+	transition: transform 0.3s ease-out;
+}
+#main .grpCard img {
+	position: absolute;
+	top: 4.6rem;
+	left: 0;
+	width: 100%;
+	height: 4.2rem;
+}
+#main .grpCard .txt {
+	position: absolute;
+	top: 11.3rem;
+	left: 0;
+	width: 100%;
+	color: #000;
+	font-size: 1.4rem;
+	line-height: 2.2rem;
+	text-align: center;
+	white-space: nowrap;
+}
+#main .grpCtrl {
+	position: relative;
+	height: 3.6rem;
+	margin-top: 4rem;
+}
+#main .grpNav {
+	position: absolute;
+	top: 0.5rem;
+	left: 50%;
+	width: 30.8rem;
+	height: 2.2rem;
+	margin-left: -15.4rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#main .grpArrow {
+	width: 1.3rem;
+	height: 2.2rem;
+	background: url(../img/common/arrow_small.svg) no-repeat center / contain;
+}
+#main .grpArrow.next {
+	transform: scaleX(-1);
+}
+#main .grpDots {
+	display: flex;
+	gap: 3rem;
+}
+#main .grpDots button {
+	width: 1.2rem;
+	height: 1.2rem;
+	background: var(--color-blue);
+	border-radius: 50%;
+	opacity: 0.3;
+	transition: opacity 0.3s;
+}
+#main .grpDots button.is-active {
+	opacity: 1;
+}
+#main .grpCtrl .moreBtn {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+@media all and (min-width: 897px) {
+	/* Figma「グループ会社-1002」：hover でカードごと 11px 上へ（0.3s ease-out） */
+	#main .grpCard a:hover {
+		transform: translateY(-1.1rem);
+	}
+	#main .grpArrow:hover,
+	#main .grpDots button:not(.is-active):hover {
+		opacity: 0.6;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .group {
+		margin-top: 6rem;
+	}
+	#main .grpSlider {
+		margin-top: 2.4rem;
+	}
+	#main .grpCtrl {
+		height: auto;
+		margin-top: 2.4rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2.4rem;
+	}
+	#main .grpNav {
+		position: static;
+		margin-left: 0;
+	}
+	#main .grpCtrl .moreBtn {
+		position: relative;
+		align-self: flex-end;
+	}
+}
+
+/*------------------------------------------------------------
+	お知らせ（PC：左に見出し、右に一覧。hover で行が白地）
+------------------------------------------------------------*/
+#main .gradArea {
+	padding-bottom: 12rem;
+}
+#main .news {
+	margin-top: 11.1rem;
+}
+#main .news .inner {
+	position: relative;
+}
+#main .newsList {
+	width: 82.5rem;
+	margin: -7.3rem 0 0 auto;
+}
+#main .newsList a {
+	position: relative;
+	height: 8rem;
+	padding: 0 0 0 1.7rem;
+	display: flex;
+	align-items: center;
+	border-radius: 0.6rem;
+	transition: background-color 0.3s ease-out;
+}
+/* 下線（Figma「Line 22」。行の左 17px から右端まで。白） */
+#main .newsList a::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 1.7rem;
+	right: 0;
+	height: 1px;
+	background: #fff;
+	transition: opacity 0.3s ease-out;
+}
+#main .newsList time {
+	width: 10.6rem;
+	flex-shrink: 0;
+	color: var(--color-blue);
+	font-family: var(--font-en);
+	font-size: 1.6rem;
+	line-height: 1.03;
+}
+#main .newsList .ttl {
+	min-width: 0;
+	overflow: hidden;
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+#main .newsList .is-pdf::before {
+	content: "";
+	order: 1;
+	width: 1.6rem;
+	height: 2rem;
+	margin-left: 1.5rem;
+	flex-shrink: 0;
+	background: url(../img/common/icon_pdf.svg) no-repeat center / contain;
+}
+#main .newsMore {
+	margin-top: 3rem;
+	text-align: right;
+}
+@media all and (min-width: 897px) {
+	#main .newsList a:hover {
+		background: #fff;
+	}
+	#main .newsList a:hover::after {
+		opacity: 0;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .gradArea {
+		padding-bottom: 6rem;
+	}
+	#main .news {
+		margin-top: 6rem;
+	}
+	#main .newsList {
+		width: auto;
+		margin: 1.6rem 0 0;
+	}
+	#main .newsList a {
+		height: auto;
+		padding: 1.6rem 3rem 1.6rem 0;
+		flex-wrap: wrap;
+		border-radius: 0;
+	}
+	#main .newsList a::after {
+		left: 0;
+	}
+	#main .newsList time {
+		width: 100%;
+		margin-bottom: 0.6rem;
+		font-size: 1.4rem;
+	}
+	#main .newsList .ttl {
+		width: 100%;
+		font-size: 1.4rem;
+		line-height: 1.6;
+		white-space: normal;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+	#main .newsList .is-pdf::before {
+		position: absolute;
+		right: 0;
+		top: 50%;
+		margin: -1rem 0 0;
+	}
+	#main .newsMore {
+		margin-top: 2.4rem;
+	}
+}
+
+/*------------------------------------------------------------
+	その他リンク（白背景。540×70 のリンクを2列×2行）
+------------------------------------------------------------*/
+#main .otherLinks {
+	position: relative;
+	padding: 12rem 0;
+	background: #fff;
+}
+#main .otherLinks ul {
+	display: grid;
+	grid-template-columns: repeat(2, 54rem);
+	justify-content: space-between;
+	gap: 3rem 3.9rem;
+}
+#main .otherLinks a {
+	position: relative;
+	height: 7rem;
+	padding: 0 10rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #000;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 2.8rem;
+	text-align: center;
+	background: #fff;
+	border: 1px solid var(--color-line);
+	border-radius: 0.6rem;
+	transition: border-color 0.3s, color 0.3s;
+}
+#main .otherLinks img {
+	position: absolute;
+	top: 1.7rem;
+	left: 2.5rem;
+	width: 3.5rem;
+}
+@media all and (min-width: 897px) {
+	#main .otherLinks a:hover {
+		color: var(--color-blue);
+		border-color: var(--color-blue);
+	}
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	#main .otherLinks ul {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 2rem;
+	}
+	#main .otherLinks a {
+		padding: 0 2rem 0 7rem;
+	}
+}
+@media all and (max-width: 896px) {
+	#main .otherLinks {
+		padding: 6rem 0;
+	}
+	#main .otherLinks ul {
+		grid-template-columns: 1fr;
+		gap: 1.2rem;
+	}
+	#main .otherLinks a {
+		height: 6rem;
+		padding: 0 1.6rem 0 6.4rem;
+		justify-content: flex-start;
+		font-size: 1.5rem;
+		text-align: left;
+	}
+	#main .otherLinks img {
+		top: 1.3rem;
+		left: 1.6rem;
+		width: 3.4rem;
+	}
+}
+
+/*------------------------------------------------------------
+	FV-CTA（MV 表示中に右上へ固定。MV を過ぎたら js/main.js が .hide を付け、MV 以降 CTA に切り替える）
+------------------------------------------------------------*/
+.fvCta {
+	position: fixed;
+	top: 24.5rem;
+	right: 2rem;
+	z-index: 90;
+	width: 20rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
+}
+.fvCta.hide {
+	opacity: 0;
+	visibility: hidden;
+	transform: translateX(2rem);
+}
+.fvCta a {
+	position: relative;
+	display: block;
+	border-radius: 0.6rem;
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+}
+.fvCta .tel {
+	height: 17.9rem;
+	color: #fff;
+	text-align: center;
+	background: linear-gradient(268.4deg, #3867b3 14.437%, #03d188 103.61%);
+	border: 0.3rem solid #fff;
+}
+.fvCta .tel > span {
+	position: absolute;
+	left: -0.3rem;
+	right: -0.3rem;
+	display: block;
+}
+.fvCta .tel .badge {
+	top: 1.7rem;
+	left: 1.7rem;
+	right: 1.7rem;
+	height: 3rem;
+	color: var(--color-navy);
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 3rem;
+	background: #fff;
+	border-radius: 0.4rem;
+}
+.fvCta .tel .head {
+	top: 6.45rem;
+	left: 3.2rem;
+	display: flex;
+	align-items: center;
+	gap: 0.6rem;
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 2.2rem;
+}
+.fvCta .tel .head img {
+	width: 1.9rem;
+}
+.fvCta .tel .num {
+	top: 9.85rem;
+	font-family: var(--font-en);
+	font-size: 2.5rem;
+	font-weight: 600;
+	line-height: 2.2rem;
+	letter-spacing: 0.02em;
+}
+.fvCta .tel .note {
+	top: 12.55rem;
+	font-size: 1.2rem;
+	font-weight: 500;
+	line-height: 2.2rem;
+}
+.fvCta .mail {
+	height: 8.2rem;
+	background: linear-gradient(135.82deg, #fff 45.876%, #bcd4e9 108.14%);
+}
+.fvCta .mail .icon {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 8.2rem;
+	height: 8.2rem;
+	background: url(../img/common/fv_corp_bg.svg) no-repeat left top / 100% 100%;
+}
+.fvCta .indiv .icon {
+	background-image: url(../img/common/fv_indiv_bg.svg);
+}
+.fvCta .mail .icon img {
+	position: absolute;
+	top: 2.4rem;
+	left: 1.79rem;
+	width: 3.65rem;
+}
+.fvCta .indiv .icon img {
+	top: 2.3rem;
+	left: 1.8rem;
+	width: 3.6rem;
+}
+.fvCta .mail .target,
+.fvCta .mail .txt {
+	position: absolute;
+	left: 8.8rem;
+	width: 9.6rem;
+	display: block;
+	font-weight: 700;
+	line-height: 2.2rem;
+	text-align: center;
+	white-space: nowrap;
+}
+.fvCta .mail .target {
+	top: 0.9rem;
+	color: #21b2a1;
+	font-size: 1.4rem;
+}
+.fvCta .indiv .target {
+	color: var(--color-blue);
+}
+.fvCta .mail .txt {
+	top: 3.1rem;
+	color: var(--color-navy2);
+	font-size: 1.6rem;
+}
+@media all and (min-width: 897px) {
+	.fvCta a {
+		transition: transform 0.3s, box-shadow 0.3s;
+	}
+	.fvCta a:hover {
+		transform: translateY(-0.3rem);
+		box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.3);
+	}
+}
+@media all and (max-width: 896px) {
+	.fvCta {
+		display: none;
+	}
+}

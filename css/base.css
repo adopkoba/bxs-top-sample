@@ -1,0 +1,1104 @@
+@charset "utf-8";
+/*============================================================
+	base.css … 全ページ共通（レスポンシブの仕組み・ヘッダー・フッター・固定CTA・スクロールアニメーション）
+	ページ固有のスタイルは各ページ用 CSS（例：css/top.css）に書く。
+
+	レスポンシブ方針（amenity-group.co.jp 方式）
+	- 1rem = 10px を基準に、寸法はすべて rem（Figma の px ÷ 10）で書く
+	- html の font-size を画面幅で切り替え、範囲ごとにページ全体を比例拡縮させる
+	    1366px 以上       : 10px 固定
+	    1025px 〜 1365px  : 1366px 基準で縮小
+	    897 〜 1024px     : 1100px 基準で縮小（文字を少し大きめに保つ／ヘッダーはナビを隠す）
+	    390px 〜 896px    : 10px 固定
+	    389px 以下        : 390px 基準で縮小
+	- ブレークポイント：1024/1025（ヘッダー切替）、896/897（PC/SP 切替）
+============================================================*/
+
+/*------------------------------------------------------------
+	変数
+------------------------------------------------------------*/
+:root {
+	--design-pc: 1366;
+	--design-tab: 1100;
+	--design-sp: 390;
+
+	--color-text: #1a1a1a;
+	--color-bg: #fff;
+	--color-blue: #009ce5;    /* Figma：青 */
+	--color-navy: #184080;    /* Figma：lp青 */
+	--color-navy2: #122d59;   /* Figma：ネイビー */
+	--color-red: #dc2d2d;     /* Figma：ヘッダーcta-赤 */
+	--color-btn: #3f3f3f;     /* Figma：ボタンカラー */
+	--color-gray: #aaa;       /* Figma：グレー文字 */
+	--color-line: #dedede;
+	--font-base: "Noto Sans JP", sans-serif;
+	--font-en: "Montserrat", sans-serif;
+
+	--header-h: 8.6rem;
+}
+@media all and (max-width: 896px) {
+	:root {
+		--header-h: 6rem;
+	}
+}
+
+/*------------------------------------------------------------
+	リセット・ベース
+------------------------------------------------------------*/
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+html {
+	font-size: 62.5%; /* = 10px */
+	scroll-behavior: smooth;
+}
+/* 「1365px」「389px」は「デザイン幅 − 1」（メディアクエリには変数が使えないため直書き） */
+@media all and (min-width: 897px) and (max-width: 1365px) {
+	html {
+		font-size: calc(1000vw / var(--design-pc));
+	}
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	html {
+		font-size: calc(1000vw / var(--design-tab));
+	}
+}
+@media all and (max-width: 389px) {
+	html {
+		font-size: calc(1000vw / var(--design-sp));
+	}
+}
+body {
+	color: var(--color-text);
+	font-family: var(--font-base);
+	font-size: 1.6rem;
+	line-height: 1.5;
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+	background: var(--color-bg);
+}
+/* メニューを開いている間、背景をスクロールさせない（js/main.js が付け外し） */
+body.fixed {
+	position: fixed;
+	width: 100%;
+}
+ul, ol {
+	list-style: none;
+}
+img {
+	vertical-align: top;
+	max-width: 100%;
+	height: auto;
+}
+a {
+	color: inherit;
+	text-decoration: none;
+	transition: opacity 0.3s, color 0.3s, background-color 0.3s, border-color 0.3s;
+}
+button {
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+#container {
+	position: relative;
+	overflow-x: clip; /* はみ出す装飾があっても横スクロールを出さない */
+}
+[id] {
+	scroll-margin-top: var(--header-h);
+}
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/*------------------------------------------------------------
+	PC／SP 出し分け・電話リンク
+------------------------------------------------------------*/
+@media all and (min-width: 897px) {
+	.sp {
+		display: none !important;
+	}
+	a[href^="tel:"] {
+		pointer-events: none;
+		cursor: default;
+	}
+}
+@media all and (max-width: 896px) {
+	.pc {
+		display: none !important;
+	}
+}
+
+/*------------------------------------------------------------
+	中身の幅（各セクションの .inner）：1120px＋左右 123px（Figma のコンテンツ幅）
+------------------------------------------------------------*/
+.inner {
+	max-width: calc(var(--design-pc) * 0.1rem);
+	margin: 0 auto;
+	padding: 0 12.3rem;
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	.inner {
+		padding-left: 4rem;
+		padding-right: 4rem;
+	}
+}
+@media all and (max-width: 896px) {
+	.inner {
+		padding: 0 2rem;
+	}
+}
+
+/*------------------------------------------------------------
+	ヘッダー
+	PC：ロゴ・キャラ・ナビ・お問い合わせ・メニュー ／ 1024px 以下：ナビを隠す
+------------------------------------------------------------*/
+#gHeader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: var(--header-h);
+}
+#gHeader .hBox {
+	position: relative;
+	z-index: 2;
+	height: 100%;
+	padding-left: 2.3rem;
+	display: flex;
+	align-items: center;
+	background: var(--color-bg);
+	box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, 0.08);
+}
+#gHeader .logo {
+	width: 26.3rem;
+	display: block;
+	flex-shrink: 0;
+}
+#gHeader .chara {
+	width: 4.3rem;
+	margin-left: 1.5rem;
+	flex-shrink: 0;
+}
+#gHeader .gNavi {
+	margin-left: auto;
+}
+#gHeader .gNavi ul {
+	display: flex;
+	gap: 4rem;
+}
+#gHeader .gNavi a {
+	display: block;
+	font-size: 1.6rem;
+	font-weight: 500;
+	line-height: 2.4rem;
+	white-space: nowrap;
+}
+#gHeader .hContact {
+	position: relative;
+	width: 18rem;
+	height: 5rem;
+	margin-left: 3.8rem;
+	padding-left: 3.1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	color: #fff;
+	font-size: 1.6rem;
+	font-weight: 700;
+	background: var(--color-blue);
+	border-radius: 2.5rem;
+}
+#gHeader .hContact .icon {
+	position: absolute;
+	top: 1.1rem;
+	left: 1rem;
+	width: 2.8rem;
+	height: 2.8rem;
+	background: url(../img/common/icon_mail.svg) no-repeat center / contain;
+}
+/* メニューボタン（2本線 → ×） */
+#gHeader .menu {
+	position: relative;
+	width: 8.6rem;
+	height: 8.6rem;
+	flex-shrink: 0;
+}
+#gHeader .menu span {
+	position: absolute;
+	left: 2.1rem;
+	width: 4.5rem;
+	height: 1px;
+	background: var(--color-text);
+	transition: transform 0.3s, top 0.3s;
+}
+#gHeader .menu .top    { top: 3.8rem; }
+#gHeader .menu .bottom { top: 4.8rem; }
+#gHeader .menu.on .top {
+	top: 4.3rem;
+	transform: rotate(30deg);
+}
+#gHeader .menu.on .bottom {
+	top: 4.3rem;
+	transform: rotate(-30deg);
+}
+@media all and (min-width: 1025px) {
+	#gHeader .gNavi a:hover {
+		color: var(--color-blue);
+	}
+}
+@media all and (min-width: 897px) {
+	#gHeader .hContact:hover {
+		background: var(--color-navy);
+	}
+	#gHeader .hContact:hover .icon {
+		background-image: url(../img/common/icon_mail_hover.svg);
+	}
+}
+@media all and (max-width: 1024px) {
+	#gHeader .gNavi {
+		display: none;
+	}
+	#gHeader .hContact {
+		margin-left: auto;
+	}
+}
+@media all and (max-width: 896px) {
+	#gHeader .hBox {
+		padding-left: 0.9rem;
+	}
+	#gHeader .logo {
+		width: 13.7rem;
+	}
+	#gHeader .chara {
+		width: 2.2rem;
+		margin-left: 0.8rem;
+	}
+	#gHeader .hContact {
+		width: 12.4rem;
+		height: 4rem;
+		padding-left: 2.6rem;
+		font-size: 1.3rem;
+		border-radius: 2rem;
+	}
+	#gHeader .hContact .icon {
+		top: 0.8rem;
+		left: 0.8rem;
+		width: 2.4rem;
+		height: 2.4rem;
+	}
+	#gHeader .menu {
+		width: 6rem;
+		height: 6rem;
+	}
+	#gHeader .menu span {
+		left: 1.6rem;
+		width: 2.8rem;
+	}
+	#gHeader .menu .top    { top: 2.6rem; }
+	#gHeader .menu .bottom { top: 3.4rem; }
+	#gHeader .menu.on .top,
+	#gHeader .menu.on .bottom {
+		top: 3rem;
+	}
+}
+
+/* メニュー本体（Figma にデザインなし・仮） */
+#gHeader .menuBox {
+	position: fixed;
+	top: var(--header-h);
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: calc(100svh - var(--header-h));
+	overflow-y: auto;
+	background: #f6f6f6;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s, visibility 0.3s;
+}
+#gHeader .menuBox.on {
+	opacity: 1;
+	visibility: visible;
+}
+#gHeader .menuInner {
+	max-width: 136.6rem;
+	margin: 0 auto;
+	padding: 6rem 6.4rem 8rem;
+}
+@media all and (max-width: 896px) {
+	#gHeader .menuInner {
+		padding: 3.2rem 2rem 12rem;
+	}
+}
+
+/*------------------------------------------------------------
+	サイトマップ（フッターとメニューで共通）
+------------------------------------------------------------*/
+.sitemap {
+	display: flex;
+	gap: 5.7rem;
+}
+.sitemap .col:nth-child(1) { width: 18.2rem; }
+.sitemap .col:nth-child(2) { width: 24.1rem; }
+.sitemap .col:nth-child(3) { width: 19.7rem; }
+.sitemap .col:nth-child(4) { width: 18.2rem; }
+.sitemap .ttl {
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+}
+.sitemap ul {
+	margin-top: 1.1rem;
+}
+.sitemap li {
+	position: relative;
+	padding-left: 2.1rem;
+	font-size: 1.4rem;
+	line-height: 3rem;
+	letter-spacing: 0.05em;
+	white-space: nowrap;
+}
+.sitemap li::before {
+	content: "";
+	position: absolute;
+	top: 1.35rem;
+	left: 0.7rem;
+	width: 0.4rem;
+	height: 0.4rem;
+	background: currentColor;
+	border-radius: 50%;
+}
+.sitemap .ext::after {
+	content: "";
+	width: 1.1rem;
+	height: 1.1rem;
+	margin-left: 0.4rem;
+	display: inline-block;
+	background: url(../img/common/icon_ext.svg) no-repeat center / contain;
+}
+@media all and (min-width: 897px) {
+	.sitemap a:hover {
+		color: var(--color-blue);
+	}
+}
+@media all and (max-width: 896px) {
+	.sitemap {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 3.2rem 1.6rem;
+	}
+	.sitemap .col:nth-child(n) {
+		width: auto;
+	}
+	.sitemap .ttl {
+		font-size: 1.5rem;
+	}
+	.sitemap ul {
+		margin-top: 0.8rem;
+	}
+	.sitemap li {
+		padding-left: 1.4rem;
+		font-size: 1.2rem;
+		line-height: 1.6;
+		letter-spacing: 0.03em;
+		white-space: normal;
+	}
+	.sitemap li + li {
+		margin-top: 0.8rem;
+	}
+	.sitemap li::before {
+		top: 0.85rem;
+		left: 0.3rem;
+	}
+	.sitemap li br {
+		display: none;
+	}
+}
+
+/*------------------------------------------------------------
+	メイン（MV がヘッダーの下まで入り込むデザインなので上余白なし）
+------------------------------------------------------------*/
+#main {
+	position: relative;
+}
+
+/*------------------------------------------------------------
+	MV 以降の固定 CTA（右端のタブ。hover で左へスライド）
+	MV より下にスクロールしたら js/main.js が .show を付ける
+	SP：画面下部に3つ並べて常に固定（Figma に SP デザインなし・仮）
+------------------------------------------------------------*/
+.sideCta {
+	position: fixed;
+	top: 32.2rem;
+	right: 0;
+	z-index: 90;
+	width: 33.6rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0.6rem;
+	pointer-events: none;
+}
+.sideCta li {
+	width: 33.6rem;
+	transform: translateX(34.6rem);
+	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.sideCta.show li {
+	transform: translateX(25rem);
+	pointer-events: auto;
+}
+.sideCta.show li:nth-child(2) { transition-delay: 0.06s; }
+.sideCta.show li:nth-child(3) { transition-delay: 0.12s; }
+.sideCta a {
+	height: 8.6rem;
+	display: flex;
+	filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.25));
+}
+.sideCta .icon {
+	width: 8.6rem;
+	height: 8.6rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+	background: var(--cta-color);
+	border-radius: 1rem 0 0 1rem;
+}
+.sideCta .icon img {
+	width: 4.8rem;
+}
+.sideCta .body {
+	flex: 1;
+	padding: 1.6rem 0 0 1.7rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+	background: #fff;
+	border-top: 2px solid var(--cta-color);
+	border-bottom: 2px solid var(--cta-color);
+}
+.sideCta .ttl {
+	font-size: 1.8rem;
+	font-weight: 500;
+	line-height: 2.2rem;
+}
+.sideCta .sub {
+	color: var(--cta-color);
+	font-size: 1.8rem;
+	font-weight: 700;
+	line-height: 2.2rem;
+	white-space: nowrap;
+}
+.sideCta .tel   { --cta-color: #096c6d; }
+.sideCta .corp,
+.sideCta .indiv { --cta-color: #1db872; }
+.sideCta .tel .body {
+	gap: 0.7rem;
+}
+.sideCta .tel .sub {
+	font-size: 2.4rem;
+}
+@media all and (min-width: 897px) {
+	.sideCta.show li:hover {
+		transform: translateX(0);
+		transition-delay: 0s;
+	}
+}
+@media all and (max-width: 896px) {
+	.sideCta,
+	.sideCta li,
+	.sideCta.show li {
+		transform: none;
+		pointer-events: auto;
+	}
+	.sideCta {
+		top: auto;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		flex-direction: row;
+		gap: 0.2rem;
+	}
+	.sideCta li {
+		flex: 1;
+		width: auto;
+	}
+	.sideCta a {
+		height: 6rem;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.4rem;
+		color: #fff;
+		background: var(--cta-color);
+		border-radius: 0.6rem 0.6rem 0 0;
+		filter: none;
+	}
+	.sideCta .icon {
+		width: 2.6rem;
+		height: 2.6rem;
+		background: none;
+	}
+	.sideCta .icon img {
+		width: 2.6rem;
+	}
+	.sideCta .body {
+		flex: none;
+		padding: 0;
+		background: none;
+		border: 0;
+	}
+	.sideCta .ttl {
+		font-size: 1.2rem;
+		font-weight: 700;
+		line-height: 1.4rem;
+	}
+	.sideCta .sub {
+		display: none;
+	}
+}
+
+/*------------------------------------------------------------
+	フッター
+------------------------------------------------------------*/
+#gFooter {
+	position: relative;
+	z-index: 0;
+	background: #f6f6f6;
+	border-radius: 2rem 2rem 0 0;
+}
+/* 角丸の外側を白で埋める（後ろの固定写真が見えないように） */
+#gFooter::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 2rem;
+	background: #fff;
+}
+#gFooter .fInner {
+	max-width: 136.6rem;
+	margin: 0 auto;
+	padding: 10.5rem 6.4rem 3rem;
+}
+/* 全国138拠点 */
+#gFooter .fAreaTtl {
+	display: flex;
+	justify-content: center;
+	gap: 2.3rem;
+	font-size: 2rem;
+	font-weight: 500;
+	line-height: 2.4rem;
+}
+#gFooter .fAreaTtl .blue {
+	color: var(--color-blue);
+	font-weight: 700;
+	letter-spacing: 0.05em;
+}
+#gFooter .fAreaList {
+	margin-top: 4.6rem;
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	gap: 2rem;
+}
+#gFooter .fAreaList a {
+	position: relative;
+	height: 4.8rem;
+	padding-right: 0.4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #000;
+	font-size: 1.4rem;
+	font-weight: 500;
+	background: #fff;
+	border: 1px solid var(--color-line);
+	border-radius: 0.6rem;
+}
+#gFooter .fAreaList a::after {
+	content: "";
+	position: absolute;
+	top: 1.7rem;
+	right: 1rem;
+	width: 0.8rem;
+	height: 1.4rem;
+	background: url(../img/common/arrow_area.svg) no-repeat center / contain;
+	transform: scaleX(-1);
+}
+#gFooter .sitemap {
+	margin-top: 5.4rem;
+	padding-top: 4.7rem;
+	border-top: 1px solid var(--color-line);
+}
+/* 会社情報ボックス */
+#gFooter .fInfo {
+	height: 15.2rem;
+	margin-top: 4.2rem;
+	padding: 2.2rem 0 0 5.3rem;
+	display: grid;
+	grid-template-columns: 40.2rem 45.8rem 1fr;
+	background: #fff;
+	border-radius: 0.6rem;
+}
+#gFooter .fLogo {
+	margin-top: 2.5rem;
+	display: flex;
+	align-items: flex-start;
+	align-self: start;
+	gap: 1.5rem;
+}
+#gFooter .fLogo img {
+	width: 26.3rem;
+}
+#gFooter .fLogo .chara {
+	width: 4.3rem;
+	margin-top: 0.7rem;
+}
+#gFooter .fAddress p {
+	font-size: 1.6rem;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+}
+#gFooter .fBtn {
+	width: 33rem;
+	height: 3.6rem;
+	margin-top: 1.6rem;
+	margin-left: -0.1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.6rem;
+	color: #fff;
+	font-size: 1.4rem;
+	font-weight: 500;
+	background: var(--color-btn);
+	border-radius: 0.6rem;
+}
+#gFooter .fBtn::after {
+	content: "";
+	width: 1.1rem;
+	height: 1.1rem;
+	background: url(../img/common/icon_ext_w.svg) no-repeat center / contain;
+}
+#gFooter .fLinks {
+	color: var(--color-btn);
+}
+#gFooter .fLinks .ttl {
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+}
+#gFooter .fLinks ul {
+	margin-top: 0.5rem;
+	font-size: 1.4rem;
+	line-height: 2.6rem;
+}
+#gFooter .fLinks li::before {
+	content: "・";
+}
+#gFooter .copyright small {
+	font-size: inherit;
+}
+#gFooter .copyright {
+	margin-top: 2.2rem;
+	color: var(--color-gray);
+	font-size: 1.4rem;
+	line-height: 2.4rem;
+	letter-spacing: 0.05em;
+	text-align: center;
+}
+@media all and (min-width: 897px) {
+	#gFooter .fAreaList a:hover {
+		color: var(--color-blue);
+		border-color: var(--color-blue);
+	}
+	#gFooter .fLogo:hover,
+	#gFooter .fBtn:hover {
+		opacity: 0.7;
+	}
+	#gFooter .fLinks a:hover {
+		color: var(--color-blue);
+	}
+}
+@media all and (min-width: 897px) and (max-width: 1024px) {
+	#gFooter .fInner {
+		padding-left: 4rem;
+		padding-right: 4rem;
+	}
+	#gFooter .fAreaList {
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1.2rem 2rem;
+	}
+	#gFooter .sitemap {
+		flex-wrap: wrap;
+		gap: 4rem 5.7rem;
+	}
+	#gFooter .fInfo {
+		height: auto;
+		padding: 2.4rem 4rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 2.4rem;
+	}
+	#gFooter .fLogo {
+		margin-top: 0;
+		grid-column: 1 / -1;
+	}
+}
+@media all and (max-width: 896px) {
+	#gFooter {
+		padding-bottom: 6rem; /* 画面下部の固定 CTA の分 */
+	}
+	#gFooter .fInner {
+		padding: 5.6rem 2rem 2.4rem;
+	}
+	#gFooter .fAreaTtl {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.8rem;
+		font-size: 1.4rem;
+		line-height: 2.2rem;
+		text-align: center;
+	}
+	#gFooter .fAreaTtl .blue {
+		font-size: 1.8rem;
+	}
+	#gFooter .fAreaList {
+		margin-top: 2.4rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+	#gFooter .fAreaList a {
+		height: 4.4rem;
+		font-size: 1.3rem;
+	}
+	#gFooter .fAreaList a::after {
+		top: 1.5rem;
+	}
+	#gFooter .sitemap {
+		margin-top: 4rem;
+		padding-top: 4rem;
+	}
+	#gFooter .fInfo {
+		height: auto;
+		margin-top: 4rem;
+		padding: 2.8rem 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2.4rem;
+	}
+	#gFooter .fLogo {
+		margin-top: 0;
+		align-self: center;
+	}
+	#gFooter .fLogo img {
+		width: 21rem;
+	}
+	#gFooter .fLogo .chara {
+		width: 3.4rem;
+		margin-top: 0.6rem;
+	}
+	#gFooter .fAddress p {
+		font-size: 1.4rem;
+		text-align: center;
+	}
+	#gFooter .fBtn {
+		width: 100%;
+		max-width: 33rem;
+		margin: 1.6rem auto 0;
+		font-size: 1.3rem;
+	}
+	#gFooter .fLinks {
+		width: 100%;
+		max-width: 33rem;
+	}
+	#gFooter .fLinks ul {
+		font-size: 1.3rem;
+	}
+	#gFooter .copyright {
+		margin-top: 2.4rem;
+		font-size: 1rem;
+		line-height: 1.6rem;
+	}
+}
+
+/*------------------------------------------------------------
+	ページトップボタン（300px スクロールで表示。js/main.js）
+------------------------------------------------------------*/
+.pageTop {
+	position: fixed;
+	right: 0.9rem;
+	bottom: 0.9rem;
+	z-index: 90;
+	width: 4.7rem;
+	height: 4.7rem;
+	background: url(../img/common/pagetop.svg) no-repeat center / contain;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s, visibility 0.3s;
+}
+.pageTop.show {
+	opacity: 1;
+	visibility: visible;
+}
+@media all and (min-width: 897px) {
+	.pageTop.show:hover {
+		opacity: 0.7;
+	}
+}
+@media all and (max-width: 896px) {
+	.pageTop {
+		bottom: 7rem;
+		width: 4rem;
+		height: 4rem;
+	}
+}
+
+/*------------------------------------------------------------
+	スクロールアニメーション（js/main.js が画面内に入った要素へ .is-inview を付ける）
+	- .js-fade        … 左からふわっと表示（ぼかしなし）
+	- .js-fadeGroup   … 子要素の .js-fade を時間差で表示（親に付ける）
+	- .js-band        … 帯が左から伸びる（Figma「Rectangle 4260」）
+	- .secTtl         … 見出し（Figma「トップページ-h2」）のバー演出
+	参考：https://kbit.co.jp/recruit/
+------------------------------------------------------------*/
+/* ぼかしは使わない（ユーザー指示）。透明度と左からの移動だけで表示 */
+.js-fade {
+	opacity: 0;
+	transform: translateX(-4rem);
+	transition: opacity 1s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+	transition-delay: var(--delay, 0s);
+}
+.js-fade.is-inview {
+	opacity: 1;
+	transform: none;
+}
+/* 拡大縮小（scaleX）だと伸びる途中がぼやけて見えるため、clip-path で切り抜いて伸ばす */
+.js-band {
+	clip-path: inset(0 100% 0 0);
+	transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.js-band.is-inview {
+	clip-path: inset(0 0 0 0);
+}
+
+/*
+	見出し（Figma「トップページ-h2」／アニメーション「h2-スクロールアニメーション」）
+	<h2 class="secTtl js-secTtl"><span class="en">Network</span><span class="ja">全国対応ネットワーク</span></h2>
+	① 上の青バーが伸びる(0.4s) → ② 下の紺バーが伸びる(0.4s) → ③ バーが縦線に縮み、文字が下からふわっと出る(0.6s)
+*/
+.secTtl {
+	position: relative;
+	padding: 0 0 0 2.2rem;
+	height: 6.3rem;
+	display: inline-block;
+	vertical-align: top;
+	font-weight: 700;
+	--bar-top-w: 13.1rem;
+}
+.secTtl .en {
+	margin-top: -0.4rem;
+	display: block;
+	color: var(--color-blue);
+	font-family: var(--font-en);
+	font-size: 2.4rem;
+	line-height: 1.03;
+	text-transform: capitalize;
+}
+.secTtl .ja {
+	margin-top: 0.3rem;
+	display: block;
+	color: var(--color-navy);
+	font-size: 3.2rem;
+	line-height: 1.42;
+	letter-spacing: 0.03em;
+	white-space: nowrap;
+}
+.secTtl::before,
+.secTtl::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 0.2rem;
+}
+.secTtl::before {
+	top: 0;
+	height: 1.76rem;
+	background: var(--color-blue);
+}
+.secTtl::after {
+	top: 1.76rem;
+	height: 4.54rem;
+	background: var(--color-navy);
+}
+.js-secTtl .en,
+.js-secTtl .ja {
+	opacity: 0;
+	transform: translateY(0.8rem);
+}
+.js-secTtl::before,
+.js-secTtl::after {
+	width: 0;
+}
+.js-secTtl.is-inview .en,
+.js-secTtl.is-inview .ja {
+	animation: secTtlTxt 1.4s both;
+}
+.js-secTtl.is-inview::before {
+	animation: secTtlBarTop 1.4s both;
+}
+.js-secTtl.is-inview::after {
+	animation: secTtlBarBottom 1.4s both;
+}
+@keyframes secTtlBarTop {
+	0%     { width: 0; animation-timing-function: ease-out; }
+	28.6%  { width: var(--bar-top-w); }
+	57.1%  { width: var(--bar-top-w); animation-timing-function: ease-in-out; }
+	100%   { width: 0.2rem; }
+}
+@keyframes secTtlBarBottom {
+	0%, 28.6% { width: 0; animation-timing-function: ease-out; }
+	57.1%     { width: 100%; animation-timing-function: ease-in-out; }
+	100%      { width: 0.2rem; }
+}
+@keyframes secTtlTxt {
+	0%, 57.1% { opacity: 0; transform: translateY(0.8rem); animation-timing-function: ease-in-out; }
+	100%      { opacity: 1; transform: none; }
+}
+@media all and (max-width: 896px) {
+	.secTtl {
+		padding-left: 1.6rem;
+		--bar-top-w: 9.6rem;
+	}
+	.secTtl .en {
+		font-size: 1.8rem;
+	}
+	.secTtl .ja {
+		font-size: 2.4rem;
+	}
+	.secTtl {
+		height: 5rem;
+	}
+	.secTtl::before { height: 1.4rem; }
+	.secTtl::after  { top: 1.4rem; height: 3.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.js-fade,
+	.js-band,
+	.js-secTtl .en,
+	.js-secTtl .ja {
+		opacity: 1;
+		transform: none;
+		clip-path: none;
+		transition: none;
+		animation: none !important;
+	}
+	.js-secTtl::before,
+	.js-secTtl::after {
+		width: 0.2rem;
+		animation: none !important;
+	}
+}
+
+/*------------------------------------------------------------
+	ボタン（Figma「btn2-1002」）：白い角丸＋青文字＋右に丸矢印。hover で紺地・白文字
+	幅は既定 26.5rem。変えるときは --btn-w を指定する
+------------------------------------------------------------*/
+.btn01 {
+	position: relative;
+	width: var(--btn-w, 26.5rem);
+	min-height: 6rem;
+	padding: 0.6rem 6rem 0.6rem 2.9rem;
+	display: inline-flex;
+	align-items: center;
+	color: var(--color-blue);
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1.45;
+	background: #fff;
+	border-radius: 5rem;
+	transition: color 0.3s, background-color 0.3s;
+}
+.btn01::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 1.3rem;
+	width: 3.6rem;
+	height: 3.6rem;
+	margin-top: -1.8rem;
+	background: url(../img/common/btn_arrow.svg) no-repeat center / contain;
+}
+@media all and (min-width: 897px) {
+	a.btn01:hover,
+	a:hover .btn01 {
+		color: #fff;
+		background: var(--color-navy);
+	}
+	a.btn01:hover::after,
+	a:hover .btn01::after {
+		background-image: url(../img/common/btn_arrow_hover.svg);
+	}
+}
+@media all and (max-width: 896px) {
+	.btn01 {
+		min-height: 5.2rem;
+		font-size: 1.4rem;
+	}
+	.btn01::after {
+		width: 3.2rem;
+		height: 3.2rem;
+		margin-top: -1.6rem;
+		right: 1rem;
+	}
+}
+
+/*------------------------------------------------------------
+	もっと見る（Figma「txt-btn-1002」）：文字＋右に丸矢印。hover で丸が紺
+------------------------------------------------------------*/
+.moreBtn {
+	height: 3.6rem;
+	padding-right: 5.8rem;
+	display: inline-flex;
+	align-items: center;
+	position: relative;
+	color: var(--color-btn);
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1;
+	white-space: nowrap;
+}
+.moreBtn::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 3.6rem;
+	height: 3.6rem;
+	background: url(../img/common/btn_arrow.svg) no-repeat center / contain;
+}
+@media all and (min-width: 897px) {
+	.moreBtn:hover::after {
+		background-image: url(../img/common/btn_arrow_navy.svg);
+	}
+}

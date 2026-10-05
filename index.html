@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="format-detection" content="telephone=no">
+<title>文化シヤッターサービス株式会社</title>
+<meta name="description" content="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!-- パスは必ず相対パス（index.html を直接開いても崩れないように） -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/top.css">
+</head>
+<body>
+<div id="container">
+
+	<!--============================================================
+		ヘッダー
+	============================================================-->
+	<header id="gHeader">
+		<div class="hBox">
+			<a href="./" class="logo">
+				<img src="img/common/logo.png" alt="BX 文化シヤッターサービス 文化シヤッターグループ" width="384" height="86">
+			</a>
+			<img src="img/common/chara.png" alt="" class="chara" width="172" height="177">
+			<nav class="gNavi" aria-label="グローバルナビゲーション">
+				<ul>
+					<li><a href="#">会社情報</a></li>
+					<li><a href="#">CSR活動</a></li>
+					<li><a href="#">サービス</a></li>
+					<li><a href="#">全国対応拠点</a></li>
+					<li><a href="#">採用情報</a></li>
+				</ul>
+			</nav>
+			<a href="#" class="hContact"><span class="icon" aria-hidden="true"></span>お問い合わせ</a>
+			<button type="button" class="menu" aria-label="メニューを開く" aria-expanded="false" aria-controls="menuBox">
+				<span class="top"></span><span class="bottom"></span>
+			</button>
+		</div>
+		<!-- ハンバーガーメニューの中身（Figma にデザインなし・仮。フッターのサイトマップと同じ項目） -->
+		<div class="menuBox" id="menuBox">
+			<div class="menuInner">
+				<nav class="sitemap" aria-label="メニュー">
+					<div class="col">
+						<p class="ttl">サービス</p>
+						<ul>
+							<li><a href="#">メンテナンス事業</a></li>
+							<li><a href="#">保守・点検事業</a></li>
+							<li><a href="#">遮熱事業</a></li>
+							<li><a href="#">止水・耐風・その他製品</a></li>
+							<li><a href="#">施工事例</a></li>
+						</ul>
+					</div>
+					<div class="col">
+						<p class="ttl">お客さまサポート</p>
+						<ul>
+							<li><a href="#">シャッターのお取り扱いについて</a></li>
+							<li><a href="#">災害時の対応</a></li>
+							<li><a href="#">よくある質問</a></li>
+							<li><a href="#">お問い合わせ</a></li>
+							<li><a href="#">修理・点検・見積りのご相談</a></li>
+						</ul>
+					</div>
+					<div class="col">
+						<p class="ttl">会社情報</p>
+						<ul>
+							<li><a href="#">社長メッセージ</a></li>
+							<li><a href="#">会社概要</a></li>
+							<li><a href="#">沿革</a></li>
+							<li><a href="#">グループ会社一覧</a></li>
+							<li><a href="#">CSR活動</a></li>
+							<li><a href="#" target="_blank" rel="noopener" class="ext">文化シヤッター株式会社</a></li>
+						</ul>
+					</div>
+					<div class="col">
+						<p class="ttl">採用情報</p>
+						<ul>
+							<li><a href="#">3分で知る<br>文化シャッターサービス</a></li>
+							<li><a href="#">仕事を知る</a></li>
+							<li><a href="#">環境を知る（社員教育）</a></li>
+							<li><a href="#">数字で見る</a></li>
+							<li><a href="#">社員インタビュー</a></li>
+							<li><a href="#">採用案内・募集要項</a></li>
+							<li><a href="#">エントリー</a></li>
+						</ul>
+					</div>
+					<div class="col">
+						<p class="ttl">インフォメーション</p>
+						<ul>
+							<li><a href="#">お知らせ</a></li>
+							<li><a href="#">サービス改善に関する<br>ご意見・ご要望</a></li>
+							<li><a href="#">個人情報保護方針</a></li>
+							<li><a href="#">反社会的勢力に対する<br>基本方針</a></li>
+							<li><a href="#">カスタマーハラスメントに<br>対する基本方針</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<main id="main">
+
+		<!--============================================================
+			MV
+		============================================================-->
+		<section class="mv" id="mv">
+			<!-- 写真4枚のクロスフェード（4秒ごと・1.2秒フェード。js/main.js）。画面に固定した背景 -->
+			<div class="mvSlide js-mvSlide">
+				<img src="img/top/mv1.webp" alt="" class="is-active" width="2732" height="1536">
+				<img src="img/top/mv2.webp" alt="" width="2732" height="1536">
+				<img src="img/top/mv3.webp" alt="" width="2732" height="1536">
+				<img src="img/top/mv4.webp" alt="" width="2732" height="1536">
+			</div>
+
+			<!--
+				重要なお知らせ（PC は MV の上に重ねる／SP は MV の上に通常配置）
+				WordPress：最新の「重要なお知らせ」1件を表示。リンク先は記事詳細（未定）
+			-->
+			<a href="#" class="newsBar">
+				<span class="label">重要なお知らせ</span>
+				<span class="txt">このたびの令和8年熊本地震によりお亡くなりになられた方々にお悔み申し上げますとともに、被災された皆様に心よりお見舞い申し上げます。<br>テキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入りますテキストが入ります</span>
+			</a>
+
+			<h1 class="mvCatch">
+				<span class="line js-fade" style="--delay: 0.3s;">設備を守るという、</span>
+				<span class="line js-fade" style="--delay: 0.5s;">ただ一つの使命を胸に。</span>
+			</h1>
+		</section>
+
+		<!--
+			英字テキストの無限ループ（右→左）
+			js/main.js が画面幅に合わせて文を複製し、同じ並びを2組つないで -50% ずつ流す（大きい画面でも途切れない）
+		-->
+		<div class="loopTxt" aria-hidden="true">
+			<div class="loopTrack js-loopTrack">
+				<p>Supporting Safety With Sincerity And Expertise</p>
+				<p>Supporting Safety With Sincerity And Expertise</p>
+			</div>
+		</div>
+
+		<!--============================================================
+			背景エリア（固定写真の上に、ぼかし＋背景色を重ねる。js/main.js）
+			- 上部：白の半透明（80%→89%）で写真がぼけて透ける
+			- お問い合わせフロー：スクロールに合わせて徐々に白ベタへ
+			- コンテンツ一覧に来たら #C1E6F3、お知らせに来たら #C0ECDF にふわっと切り替え
+			「全国対応ネットワーク」〜「お知らせ」のセクションはこの .gradArea の中に入れる
+		============================================================-->
+		<div class="gradArea js-gradArea">
+			<div class="gradBg" aria-hidden="true">
+				<div class="gradBgInner js-gradBg">
+					<span class="gradColor" data-bg-from="contents" style="background: #c1e6f3;"></span>
+					<span class="gradColor" data-bg-from="news" style="background: #c0ecdf;"></span>
+				</div>
+			</div>
+
+			<!--============================================================
+				LP導線（シャッターメンテナンス）
+			============================================================-->
+			<div class="lpLink">
+				<div class="inner">
+					<a href="#" class="lpBanner js-fade">
+						<span class="tags">
+							<span class="tag">修理</span><span class="tag">点検</span><span class="tag">取替</span><span class="made">まで</span>
+						</span>
+						<span class="ttl">シャッターメンテナンス</span>
+						<span class="sub">まるごとお任せください。</span>
+						<span class="btn01">サービス詳細を見る</span>
+					</a>
+				</div>
+			</div>
+
+			<!--============================================================
+				全国対応ネットワーク
+			============================================================-->
+			<section class="network" id="network">
+				<div class="inner">
+					<h2 class="secTtl js-secTtl"><span class="en">Network</span><span class="ja">全国対応ネットワーク</span></h2>
+				</div>
+				<div class="netBody">
+					<div class="netBand js-band" aria-hidden="true"></div>
+					<div class="inner">
+						<div class="netStage js-fadeGroup">
+							<div class="netTxt">
+								<h3 class="netTtl js-fade">お近くの拠点から、<br>迅速なサポートをお約束。</h3>
+								<p class="netDesc js-fade">シャッターの修理・点検・防火設備検査など、さまざまなご相談に各地域のサービスステーションが対応します。</p>
+								<div class="js-fade"><a href="#" class="btn01 netBtn">最寄りの<br>サービスステーションを検索</a></div>
+							</div>
+							<!-- 日本地図（エリアにホバーすると該当地域が青くなる。js/main.js） -->
+							<div class="netMap" aria-hidden="true">
+								<img src="img/top/map_base.svg" alt="" class="base" width="730" height="675" loading="lazy">
+							<img src="img/top/map_hokkaido.svg" alt="" class="hl" data-area="hokkaido" width="730" height="675" loading="lazy">
+							<img src="img/top/map_tohoku.svg" alt="" class="hl" data-area="tohoku" width="730" height="675" loading="lazy">
+							<img src="img/top/map_kanetsu.svg" alt="" class="hl" data-area="kanetsu" width="730" height="675" loading="lazy">
+							<img src="img/top/map_shutoken.svg" alt="" class="hl" data-area="shutoken" width="730" height="675" loading="lazy">
+							<img src="img/top/map_chubu.svg" alt="" class="hl" data-area="chubu" width="730" height="675" loading="lazy">
+							<img src="img/top/map_kansai.svg" alt="" class="hl" data-area="kansai" width="730" height="675" loading="lazy">
+							<img src="img/top/map_chushikoku.svg" alt="" class="hl" data-area="chushikoku" width="730" height="675" loading="lazy">
+							<img src="img/top/map_kyushu.svg" alt="" class="hl" data-area="kyushu" width="730" height="675" loading="lazy">
+							</div>
+							<p class="netLead js-fade">全国138拠点地域密着で<br>迅速に対応</p>
+							<!-- エリア別の拠点数は固定の値（投稿ではない） -->
+							<ul class="netArea">
+							<li class="hokkaido js-fade" data-area="hokkaido">
+								<a href="#">
+									<span class="name">北海道エリア</span>
+									<span class="count"><span class="num">13</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="tohoku js-fade" data-area="tohoku">
+								<a href="#">
+									<span class="name">東北エリア</span>
+									<span class="count"><span class="num">13</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="kanetsu js-fade" data-area="kanetsu">
+								<a href="#">
+									<span class="name">関越エリア</span>
+									<span class="count"><span class="num">16</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="shutoken js-fade" data-area="shutoken">
+								<a href="#">
+									<span class="name">首都圏エリア</span>
+									<span class="count"><span class="num">30</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="chubu js-fade" data-area="chubu">
+								<a href="#">
+									<span class="name">中部エリア</span>
+									<span class="count"><span class="num">23</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="kansai js-fade" data-area="kansai">
+								<a href="#">
+									<span class="name">関西エリア</span>
+									<span class="count"><span class="num">26</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="chushikoku js-fade" data-area="chushikoku">
+								<a href="#">
+									<span class="name">中四国エリア</span>
+									<span class="count"><span class="num">11</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							<li class="kyushu js-fade" data-area="kyushu">
+								<a href="#">
+									<span class="name">九州エリア</span>
+									<span class="count"><span class="num">16</span>拠点</span>
+									<span class="arrow" aria-hidden="true"></span>
+								</a>
+							</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!--============================================================
+				製品ラインナップ（タブ切替。js/main.js）
+			============================================================-->
+			<section class="product" id="product">
+				<div class="inner">
+					<div class="prodHead">
+						<h2 class="secTtl js-secTtl"><span class="en">Products</span><span class="ja">製品ラインナップ</span></h2>
+						<p class="prodIntro js-fade">各種シャッターからビル用建材まで、安全性と機能性を追求した多彩な製品を取り揃えています。<br>お客様の建物環境や用途に合わせて、最適な機能を持つ最新のラインナップをご紹介します。</p>
+					</div>
+					<!-- 製品は固定（投稿ではない） -->
+					<div class="prodTabs js-tabs js-fade">
+						<div class="tabList" role="tablist" aria-label="製品カテゴリ">
+							<button type="button" role="tab" id="prodTab01" aria-controls="prodPanel01" aria-selected="true" class="is-active"><span class="num">01</span><span class="ja">遮熱対策製品</span></button>
+							<button type="button" role="tab" id="prodTab02" aria-controls="prodPanel02" aria-selected="false" tabindex="-1"><span class="num">02</span><span class="ja">水害対策製品</span></button>
+							<button type="button" role="tab" id="prodTab03" aria-controls="prodPanel03" aria-selected="false" tabindex="-1"><span class="num">03</span><span class="ja">風災対策製品</span></button>
+							<button type="button" role="tab" id="prodTab04" aria-controls="prodPanel04" aria-selected="false" tabindex="-1"><span class="num">04</span><span class="ja">その他製品</span></button>
+						</div>
+						<div class="tabPanels">
+							<div class="tabPanel is-active" role="tabpanel" id="prodPanel01" aria-labelledby="prodTab01">
+								<div class="panelTxt">
+									<p class="num">01</p>
+									<h3 class="name"><span class="en">Heat Shielding</span><span class="ja">遮熱対策製品</span></h3>
+									<p class="catch">建物の暑さをやわらげる遮熱シート</p>
+									<p class="desc">放射熱を最大97％カットするアルミ箔製の遮熱シート。屋根や壁に施工するだけで、夏は涼しく冬は暖かい快適空間を実現し、熱中症対策やエアコン代の削減にも効果を発揮します。</p>
+									<a href="#" class="btn01">はるクールを見る</a>
+								</div>
+								<div class="panelImg"><img src="img/top/product01.webp" alt="" width="1150" height="862" loading="lazy"></div>
+							</div>
+							<div class="tabPanel" role="tabpanel" id="prodPanel02" aria-labelledby="prodTab02">
+								<div class="panelTxt">
+									<p class="num">02</p>
+									<h3 class="name"><span class="en">Flood Protection</span><span class="ja">水害対策製品</span></h3>
+									<p class="catch">必要なときに素早く設置できる止水板</p>
+									<p class="desc">開口部に金具で固定するだけのスピーディー施工が魅力の止水板。台風や集中豪雨による急な浸水にも、工事不要で素早く備えられる止水対策製品です。</p>
+									<a href="#" class="btn01">ラクセットを見る</a>
+								</div>
+								<div class="panelImg"><img src="img/top/product02.webp" alt="" width="1150" height="862" loading="lazy"></div>
+							</div>
+							<div class="tabPanel" role="tabpanel" id="prodPanel03" aria-labelledby="prodTab03">
+								<div class="panelTxt">
+									<p class="num">03</p>
+									<h3 class="name"><span class="en">Wind Protection</span><span class="ja">風災対策製品</span></h3>
+									<p class="catch">強風による変形・破損を抑制</p>
+									<p class="desc">強風によるシャッターカーテンの膨らみや脱落を防ぐ、簡易取付タイプの風災対策製品。風速70m/s相当に耐える性能で、大切な建物と資産を強風被害から守ります。</p>
+									<a href="#" class="btn01">シャッターガードを見る</a>
+								</div>
+								<div class="panelImg"><img src="img/top/product03.webp" alt="" width="1150" height="862" loading="lazy"></div>
+							</div>
+							<div class="tabPanel is-2line" role="tabpanel" id="prodPanel04" aria-labelledby="prodTab04">
+								<div class="panelTxt">
+									<p class="num">04</p>
+									<h3 class="name"><span class="en">Other Products</span><span class="ja">その他製品</span></h3>
+									<p class="catch">文化シヤッターグループの<br>サービスについてご紹介</p>
+									<p class="desc">サービスカタログでは、シャッターの修理・点検をはじめ、防災・減災や安全対策など、文化シヤッターグループが提供するさまざまなサービスをご紹介しています。</p>
+									<a href="#" class="btn01">サービスカタログを見る</a>
+								</div>
+								<div class="panelImg"><img src="img/top/product04.webp" alt="" width="1150" height="862" loading="lazy"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!--============================================================
+				お問い合わせフロー
+			============================================================-->
+			<section class="flow" id="flow">
+				<div class="inner">
+					<h2 class="secTtl js-secTtl"><span class="en">Contact Flow</span><span class="ja">お問い合わせフロー</span></h2>
+					<ol class="flowList js-fadeGroup" data-stagger="0.25" data-trigger="group">
+						<li class="js-fade">
+							<img src="img/top/flow01.svg" alt="" class="icon" width="40" height="40" loading="lazy">
+							<p class="step">STEP 01</p>
+							<h3 class="ttl">お問い合わせ</h3>
+							<p class="desc">お電話またはメールフォームから、修理・点検・お見積りなど、ご希望の内容をお知らせください。</p>
+						</li>
+						<li class="js-fade">
+							<img src="img/top/flow02.svg" alt="" class="icon" width="40" height="40" loading="lazy">
+							<p class="step">STEP 02</p>
+							<h3 class="ttl">ご依頼内容の確認</h3>
+							<p class="desc">お困りの症状や製品、設置場所などを確認し、必要に応じて現地の状況を確認します。</p>
+						</li>
+						<li class="js-fade">
+							<img src="img/top/flow03.svg" alt="" class="icon" width="40" height="40" loading="lazy">
+							<p class="step">STEP 03</p>
+							<h3 class="ttl">お見積り・ご提案</h3>
+							<p class="desc">設備の状態やご要望に合わせて、修理・点検・取替など最適な対応内容をご提案します。</p>
+						</li>
+						<li class="js-fade">
+							<img src="img/top/flow04.svg" alt="" class="icon" width="40" height="40" loading="lazy">
+							<p class="step">STEP 04</p>
+							<h3 class="ttl">施工・アフターフォロー</h3>
+							<p class="desc">専門技術者が施工を担当。完了後もアフターフォローで安心をお届けします。</p>
+						</li>
+					</ol>
+				</div>
+			</section>
+
+			<!--============================================================
+				コンテンツ一覧（中央拡大のカルーセル。6枚をループ。js/main.js）
+			============================================================-->
+			<section class="contents" id="contents">
+				<div class="inner">
+					<h2 class="secTtl js-secTtl"><span class="en">Information</span><span class="ja">コンテンツ一覧</span></h2>
+					<!-- 固定のリンクカード（投稿ではない）。li の順番どおりに回る -->
+					<div class="ctSlider js-ctSlider js-fade">
+						<ul class="ctList">
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_service.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">サービス紹介</span>
+									</span>
+								</a>
+							</li>
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_support.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">お客様サポート</span>
+									</span>
+								</a>
+							</li>
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_faq.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">よくある質問</span>
+									</span>
+								</a>
+							</li>
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_recruit.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">採用情報</span>
+									</span>
+								</a>
+							</li>
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_company.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">会社情報</span>
+									</span>
+								</a>
+							</li>
+							<li class="ctCard">
+								<a href="#">
+									<span class="img"><img src="img/top/content_csr.webp" alt="" width="860" height="506" loading="lazy"></span>
+									<span class="body">
+										<img src="img/top/content_icon_service.svg" alt="" class="icon" width="36" height="36">
+										<span class="name">CSR情報</span>
+									</span>
+								</a>
+							</li>
+						</ul>
+						<button type="button" class="ctArrow prev" aria-label="前へ"></button>
+						<button type="button" class="ctArrow next" aria-label="次へ"></button>
+					</div>
+				</div>
+			</section>
+
+			<!--============================================================
+				文化シヤッターグループ（ロゴカードの横スライダー。ループ。js/main.js）
+			============================================================-->
+			<section class="group" id="group">
+				<div class="inner">
+					<h2 class="secTtl js-secTtl"><span class="en">Bunka Shutter Group</span><span class="ja">文化シヤッターグループ</span></h2>
+				</div>
+				<!-- グループ会社は固定（投稿ではない）。ドットの数は li の数に合わせて js/main.js が作り直す -->
+				<div class="grpSlider js-grpSlider js-fade">
+					<div class="grpView">
+						<ul class="grpTrack">
+						<li class="grpCard">
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_bunka.png" alt="文化シヤッター" width="560" height="84" loading="lazy">
+								<span class="txt">各種シャッター、住宅用建材、<br>ビル用建材の総合メーカー</span>
+							</a>
+						</li>
+						<li class="grpCard">
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_tempal.png" alt="BXテンパル" width="560" height="84" loading="lazy">
+								<span class="txt">オーニングや外装設備の設計・<br>施工に関する事業</span>
+							</a>
+						</li>
+						<li class="grpCard">
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_yutori.png" alt="BXゆとりフォーム" width="560" height="84" loading="lazy">
+								<span class="txt">リフォームの設計・施工それらに<br>関連する事業</span>
+							</a>
+						</li>
+						<li class="grpCard"> <!-- 仮（Figma のダミー） -->
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_yutori.png" alt="BXゆとりフォーム" width="560" height="84" loading="lazy">
+								<span class="txt">リフォームの設計・施工それらに<br>関連する事業</span>
+							</a>
+						</li>
+						<li class="grpCard"> <!-- 仮（Figma のダミー） -->
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_yutori.png" alt="BXゆとりフォーム" width="560" height="84" loading="lazy">
+								<span class="txt">リフォームの設計・施工それらに<br>関連する事業</span>
+							</a>
+						</li>
+						<li class="grpCard"> <!-- 仮（Figma のダミー） -->
+							<a href="#" target="_blank" rel="noopener">
+								<img src="img/top/group_yutori.png" alt="BXゆとりフォーム" width="560" height="84" loading="lazy">
+								<span class="txt">リフォームの設計・施工それらに<br>関連する事業</span>
+							</a>
+						</li>
+						</ul>
+					</div>
+					<div class="inner">
+						<div class="grpCtrl">
+							<div class="grpNav">
+								<button type="button" class="grpArrow prev" aria-label="前へ"></button>
+								<div class="grpDots">
+								<button type="button" aria-label="1枚目"></button>
+								<button type="button" aria-label="2枚目"></button>
+								<button type="button" aria-label="3枚目"></button>
+								<button type="button" aria-label="4枚目"></button>
+								<button type="button" aria-label="5枚目"></button>
+								<button type="button" aria-label="6枚目"></button>
+								</div>
+								<button type="button" class="grpArrow next" aria-label="次へ"></button>
+							</div>
+							<a href="#" class="moreBtn">もっと見る</a>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!--============================================================
+				お知らせ
+			============================================================-->
+			<section class="news" id="news">
+				<div class="inner">
+					<h2 class="secTtl js-secTtl"><span class="en">News</span><span class="ja">お知らせ</span></h2>
+					<!--
+						WordPress：お知らせの投稿ループ（li 1つ = 投稿1件、最新5件）
+						- 日付：time の datetime は Y-m-d、表示は Y.m.d
+						- リンク先：記事詳細。PDF へ直接リンクする投稿は a に class="is-pdf"（タイトルの後ろに PDF アイコン）
+						- タイトルは1行で省略（…）
+					-->
+					<ul class="newsList js-fadeGroup" data-stagger="0.1">
+							<li class="js-fade">
+								<a href="#" class="is-pdf">
+									<time datetime="2026-00-00">2026.00.00</time>
+									<span class="ttl">お知らせタイトルが入りますお知らせタイトルが入ります</span>
+								</a>
+							</li>
+							<li class="js-fade">
+								<a href="#" class="is-pdf">
+									<time datetime="2026-00-00">2026.00.00</time>
+									<span class="ttl">お知らせタイトルが入りますお知らせタイトルが入りますお知らせタイトルが入ります</span>
+								</a>
+							</li>
+							<li class="js-fade">
+								<a href="#" class="is-pdf">
+									<time datetime="2026-00-00">2026.00.00</time>
+									<span class="ttl">お知らせタイトルが入りますお知らせタイトルが入ります</span>
+								</a>
+							</li>
+							<li class="js-fade">
+								<a href="#" class="is-pdf">
+									<time datetime="2026-00-00">2026.00.00</time>
+									<span class="ttl">お知らせタイトルが入りますお知らせタイトルが入りますお知らせタイトルが入ります</span>
+								</a>
+							</li>
+							<li class="js-fade">
+								<a href="#" class="is-pdf">
+									<time datetime="2026-00-00">2026.00.00</time>
+									<span class="ttl">お知らせタイトルが入りますお知らせタイトルが入ります</span>
+								</a>
+							</li>
+					</ul>
+					<div class="newsMore"><a href="#" class="moreBtn">もっと見る</a></div>
+				</div>
+			</section>
+		</div>
+
+		<!--============================================================
+			その他リンク（白背景。背景グラデのエリアの外）
+		============================================================-->
+		<section class="otherLinks" aria-label="関連リンク">
+			<div class="inner">
+				<ul class="js-fadeGroup" data-stagger="0.12">
+					<li class="js-fade"><a href="#" target="_blank" rel="noopener"><img src="img/top/other_shop.svg" alt="" width="35" height="35" loading="lazy">文化シヤッター公式オンラインショップ</a></li>
+					<li class="js-fade"><a href="#" target="_blank" rel="noopener"><img src="img/top/other_catalog.svg" alt="" width="35" height="35" loading="lazy">サービス・問題解決・カタログ</a></li>
+					<li class="js-fade"><a href="#"><img src="img/top/other_battery.svg" alt="" width="35" height="35" loading="lazy">電池交換に関するお問い合わせ</a></li>
+					<li class="js-fade"><a href="#"><img src="img/top/other_warranty.svg" alt="" width="35" height="35" loading="lazy">修理保証について</a></li>
+				</ul>
+			</div>
+		</section>
+
+	</main>
+
+	<!--============================================================
+		固定 CTA（PC）
+		- FV-CTA：MV 表示中は右上に固定
+		- MV 以降 CTA：MV を過ぎたら右端のタブに切り替わる（hover で左へスライド）
+		SP は画面下部に3つ並べて固定（Figma に SP デザインなし・仮）
+	============================================================-->
+	<div class="fvCta" id="fvCta">
+		<a href="tel:0120365113" class="tel">
+			<span class="badge">24時間365日受付</span>
+			<span class="head"><img src="img/common/fv_tel.svg" alt="" width="19" height="19">電話で相談</span>
+			<span class="num">0120-365-113</span>
+			<span class="note">お気軽にご相談ください</span>
+		</a>
+		<a href="#" class="mail corp">
+			<span class="icon"><img src="img/common/fv_corp_icon.svg" alt="" width="36" height="35"></span>
+			<span class="target">法人向け</span>
+			<span class="txt">修理・点検を<br>メールで相談</span>
+		</a>
+		<a href="#" class="mail indiv">
+			<span class="icon"><img src="img/common/fv_indiv_icon.svg" alt="" width="36" height="36"></span>
+			<span class="target">個人向け</span>
+			<span class="txt">修理・点検を<br>メールで相談</span>
+		</a>
+	</div>
+
+	<ul class="sideCta" id="sideCta">
+		<li class="tel">
+			<a href="tel:0120365113">
+				<span class="icon"><img src="img/common/cta_tel.svg" alt="" width="48" height="48"></span>
+				<span class="body"><span class="ttl">電話で相談</span><span class="sub">0120-365-113</span></span>
+			</a>
+		</li>
+		<li class="corp">
+			<a href="#">
+				<span class="icon"><img src="img/common/cta_corp.svg" alt="" width="48" height="48"></span>
+				<span class="body"><span class="ttl">法人向け</span><span class="sub">修理・点検をメールで相談</span></span>
+			</a>
+		</li>
+		<li class="indiv">
+			<a href="#">
+				<span class="icon"><img src="img/common/cta_indiv.svg" alt="" width="48" height="48"></span>
+				<span class="body"><span class="ttl">個人向け</span><span class="sub">修理・点検をメールで相談</span></span>
+			</a>
+		</li>
+	</ul>
+
+	<!--============================================================
+		フッター
+	============================================================-->
+	<footer id="gFooter">
+		<div class="fInner">
+			<div class="fArea">
+				<p class="fAreaTtl"><span class="blue">全国138拠点のサービスネットワーク</span><span>地域に密着した体制で全国をサポートします</span></p>
+				<ul class="fAreaList">
+					<li><a href="#">北海道エリア</a></li>
+					<li><a href="#">東北エリア</a></li>
+					<li><a href="#">関越エリア</a></li>
+					<li><a href="#">首都圏エリア</a></li>
+					<li><a href="#">中部エリア</a></li>
+					<li><a href="#">関西エリア</a></li>
+					<li><a href="#">中四国エリア</a></li>
+					<li><a href="#">九州エリア</a></li>
+				</ul>
+			</div>
+
+			<nav class="sitemap" aria-label="サイトマップ">
+				<div class="col">
+					<p class="ttl">サービス</p>
+					<ul>
+						<li><a href="#">メンテナンス事業</a></li>
+						<li><a href="#">保守・点検事業</a></li>
+						<li><a href="#">遮熱事業</a></li>
+						<li><a href="#">止水・耐風・その他製品</a></li>
+						<li><a href="#">施工事例</a></li>
+					</ul>
+				</div>
+				<div class="col">
+					<p class="ttl">お客さまサポート</p>
+					<ul>
+						<li><a href="#">シャッターのお取り扱いについて</a></li>
+						<li><a href="#">災害時の対応</a></li>
+						<li><a href="#">よくある質問</a></li>
+						<li><a href="#">お問い合わせ</a></li>
+						<li><a href="#">修理・点検・見積りのご相談</a></li>
+					</ul>
+				</div>
+				<div class="col">
+					<p class="ttl">会社情報</p>
+					<ul>
+						<li><a href="#">社長メッセージ</a></li>
+						<li><a href="#">会社概要</a></li>
+						<li><a href="#">沿革</a></li>
+						<li><a href="#">グループ会社一覧</a></li>
+						<li><a href="#">CSR活動</a></li>
+						<li><a href="#" target="_blank" rel="noopener" class="ext">文化シヤッター株式会社</a></li>
+					</ul>
+				</div>
+				<div class="col">
+					<p class="ttl">採用情報</p>
+					<ul>
+						<li><a href="#">3分で知る<br>文化シャッターサービス</a></li>
+						<li><a href="#">仕事を知る</a></li>
+						<li><a href="#">環境を知る（社員教育）</a></li>
+						<li><a href="#">数字で見る</a></li>
+						<li><a href="#">社員インタビュー</a></li>
+						<li><a href="#">採用案内・募集要項</a></li>
+						<li><a href="#">エントリー</a></li>
+					</ul>
+				</div>
+				<div class="col">
+					<p class="ttl">インフォメーション</p>
+					<ul>
+						<li><a href="#">お知らせ</a></li>
+						<li><a href="#">サービス改善に関する<br>ご意見・ご要望</a></li>
+						<li><a href="#">個人情報保護方針</a></li>
+						<li><a href="#">反社会的勢力に対する<br>基本方針</a></li>
+						<li><a href="#">カスタマーハラスメントに<br>対する基本方針</a></li>
+					</ul>
+				</div>
+			</nav>
+
+			<div class="fInfo">
+				<a href="./" class="fLogo">
+					<img src="img/common/logo.png" alt="BX 文化シヤッターサービス 文化シヤッターグループ" width="384" height="86" loading="lazy">
+					<img src="img/common/chara.png" alt="" class="chara" width="172" height="177" loading="lazy">
+				</a>
+				<div class="fAddress">
+					<p>本社 東京都豊島区西巣鴨4-14-5 BX113ビル<br>TEL：<a href="tel:0120365113">0120-365-113</a></p>
+					<a href="#" target="_blank" rel="noopener" class="fBtn">文化シヤッター株式会社コーポレートサイト</a>
+				</div>
+				<div class="fLinks">
+					<p class="ttl">関連リンク</p>
+					<ul>
+						<li><a href="#" target="_blank" rel="noopener">文化シヤッター公式オンラインショップ</a></li>
+						<li><a href="#" target="_blank" rel="noopener">サービス・問題解決・カタログ</a></li>
+						<li><a href="#">電池交換に関するお問い合わせ</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<p class="copyright"><small>(C)2026 Bunka Shutter Service Co., Ltd.All Rights Reserved.</small></p>
+		</div>
+	</footer>
+
+	<a href="#container" class="pageTop" aria-label="ページの先頭へ"></a>
+
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>
