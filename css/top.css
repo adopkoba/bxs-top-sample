@@ -190,11 +190,6 @@
 		font-size: 2.8rem;
 	}
 }
-@media (prefers-reduced-motion: reduce) {
-	#main .loopTrack {
-		animation: none;
-	}
-}
 
 /*------------------------------------------------------------
 	背景エリア（固定した MV 写真の上に重なってスクロールしてくる）

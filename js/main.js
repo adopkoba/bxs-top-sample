@@ -259,7 +259,7 @@
 			apply(true);
 			restart();
 		}
-		// 自動スライド：4秒ごとに次へ。マウスが乗っている間・画面外・タブ非表示のときは止める。
+		// 自動スライド：4秒ごとに次へ。マウスが乗っている間・画面外・タブ非表示のときは止める（OS の動きを減らす設定では止めない）。
 		// 矢印・ドット・スワイプで動かしたら、そこから4秒数え直す
 		var AUTO_MS = 4000;
 		var timer = null;
@@ -272,7 +272,6 @@
 		function restart() {
 			stop();
 			if (hovering || !inView || document.hidden) return;
-			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 			timer = setInterval(function () {
 				pos += 1;
 				apply(true);

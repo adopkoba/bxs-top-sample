@@ -1002,23 +1002,7 @@ button {
 	.secTtl::before { height: 1.4rem; }
 	.secTtl::after  { top: 1.4rem; height: 3.6rem; }
 }
-@media (prefers-reduced-motion: reduce) {
-	.js-fade,
-	.js-band,
-	.js-secTtl .en,
-	.js-secTtl .ja {
-		opacity: 1;
-		transform: none;
-		clip-path: none;
-		transition: none;
-		animation: none !important;
-	}
-	.js-secTtl::before,
-	.js-secTtl::after {
-		width: 0.2rem;
-		animation: none !important;
-	}
-}
+/* ※ OS の「アニメーション効果オフ」（prefers-reduced-motion）でも止めない（2026-10-07 ユーザー指示。Windows で演出が出ないため） */
 
 /*------------------------------------------------------------
 	ボタン（Figma「btn2-1002」）：白い角丸＋青文字＋右に丸矢印。hover で紺地・白文字
