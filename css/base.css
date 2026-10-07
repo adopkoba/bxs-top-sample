@@ -457,15 +457,18 @@ button {
 }
 .sideCta li {
 	width: 33.6rem;
+	opacity: 0;
 	transform: translateX(34.6rem);
-	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+	/* ふわっと：ゆっくり動き出して、ゆっくり止まる（表示の切替・hover の開閉とも） */
+	transition: transform 1s cubic-bezier(0.45, 0.05, 0.25, 1), opacity 0.8s ease;
 }
 .sideCta.show li {
+	opacity: 1;
 	transform: translateX(25rem);
 	pointer-events: auto;
 }
-.sideCta.show li:nth-child(2) { transition-delay: 0.06s; }
-.sideCta.show li:nth-child(3) { transition-delay: 0.12s; }
+.sideCta.show li:nth-child(2) { transition-delay: 0.1s; }
+.sideCta.show li:nth-child(3) { transition-delay: 0.2s; }
 .sideCta a {
 	height: 8.6rem;
 	display: flex;
@@ -518,6 +521,7 @@ button {
 @media all and (min-width: 897px) {
 	.sideCta.show li:hover {
 		transform: translateX(0);
+		transition-duration: 0.8s;
 		transition-delay: 0s;
 	}
 }
@@ -525,6 +529,7 @@ button {
 	.sideCta,
 	.sideCta li,
 	.sideCta.show li {
+		opacity: 1;
 		transform: none;
 		pointer-events: auto;
 	}
